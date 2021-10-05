@@ -19,7 +19,8 @@ const Home = () => {
         {!session ? (
           <>
             <p>Debe loguearse</p>
-            <button onClick={() => signIn()}>Login</button>
+            <button onClick={() => signIn(["google"])}>Login con Google</button>
+            <button onClick={() => signIn(["idp"])}>Login con IDP</button>
           </>
         ) : (
           <>

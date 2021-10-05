@@ -4,6 +4,8 @@ import { signIn, signOut, useSession } from "next-auth/client";
 const Home = () => {
   const [session, loading] = useSession();
 
+  console.log(process.env.NEXTAUTH_URL);
+
   return (
     <div>
       <Head>

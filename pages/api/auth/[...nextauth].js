@@ -26,7 +26,6 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-
     {
       id: "idp",
       name: "IDP",
@@ -35,6 +34,8 @@ export default NextAuth({
       scope: "openid+profile",
       params: { grant_type: "authorization_code" },
       response_type: "code",
+      clientId: process.env.IDP_CLIENT_ID,
+      clientSecret: process.env.IDP_CLIENT_SECRET,
       accessTokenUrl:
         "https://cdagservwapint.personal.com.ar/store/logincallback",
       requestTokenUrl:
@@ -43,8 +44,6 @@ export default NextAuth({
         "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize",
       profileUrl: "",
       async profile(profile, tokens) {},
-      clientId: process.env.IDP_CLIENT_ID,
-      clientSecret: process.env.IDP_CLIENT_SECRET,
     },
   ],
 });

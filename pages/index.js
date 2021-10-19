@@ -4,10 +4,11 @@ import { signIn, signOut, useSession } from "next-auth/client";
 import axios from "axios";
 
 const Home = () => {
+  //hook de next-auth para obtener los datos del usuario logueado
   const [session, loading] = useSession();
 
+  //metodo de ejemplo para pegarle a un endpoint que usa el token de login para autorizar
   const getData = async () => {
-    console.log("Fetch data...");
     try {
       const { data } = await axios.get("/api/fetchWithToken");
       console.log("Received data: ", data);
@@ -30,7 +31,9 @@ const Home = () => {
       <main className="p-12">
         <h1 className="text-2xl font-bold pb-4">Login test with next-auth</h1>
 
-        {!session ? (
+        {loading ? (
+          <p>Cargando...</p>
+        ) : !session ? (
           <>
             <p>No hay usuario logueado</p>
             <button className="btn-blue" onClick={() => signIn(["google"])}>

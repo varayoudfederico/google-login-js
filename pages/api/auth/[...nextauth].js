@@ -4,6 +4,8 @@ import Providers from "next-auth/providers";
 export default NextAuth({
   callbacks: {
     async jwt(token, account) {
+      console.log("token cb", token);
+      console.log("account cb", account);
       // Persist the OAuth access_token to the token right after signin
       if (account?.accessToken) {
         token.accessToken = account.accessToken;
@@ -11,6 +13,9 @@ export default NextAuth({
       return token;
     },
     async session(session, token, user) {
+      console.log("session se", session);
+      console.log("token se", token);
+      console.log("user se", user);
       // Send properties to the client, like an access_token from a provider.
       session.user.id = token.sub;
       return session;

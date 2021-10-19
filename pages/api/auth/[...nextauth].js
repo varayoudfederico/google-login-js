@@ -37,11 +37,11 @@ export default NextAuth({
       clientId: process.env.IDP_CLIENT_ID,
       clientSecret: process.env.IDP_CLIENT_SECRET,
       accessTokenUrl:
-        "https://cdagservwapint.personal.com.ar/store/logincallback",
+        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token",
       requestTokenUrl:
         "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token",
       authorizationUrl:
-        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize",
+        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize?response_type=code",
       profileUrl: "",
       async profile(profile, tokens) {},
     },

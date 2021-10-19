@@ -37,7 +37,7 @@ export default NextAuth({
       clientId: process.env.IDP_CLIENT_ID,
       clientSecret: process.env.IDP_CLIENT_SECRET,
       accessTokenUrl:
-        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token",
+        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/jwk_uri",
       requestTokenUrl:
         "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize",
       authorizationUrl:

@@ -36,14 +36,14 @@ export default NextAuth({
       response_type: "code",
       clientId: process.env.IDP_CLIENT_ID,
       clientSecret: process.env.IDP_CLIENT_SECRET,
-      accessTokenUrl:
-        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/jwk_uri",
-      requestTokenUrl:
-        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize",
+      // accessTokenUrl:
+      //   "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/jwk_uri",
+      // requestTokenUrl:
+      //   "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize",
       authorizationUrl:
         "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize?response_type=code",
-      profileUrl: "",
-      async profile(profile, tokens) {},
+      // profileUrl: "",
+      // async profile(profile, tokens) {},
     },
   ],
 });

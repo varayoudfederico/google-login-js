@@ -1,17 +1,17 @@
-
-
 export default function handler(req, res) {
-  console.log(req.query);
-  if (!req.query.code) {
-      code = req.query.code
-
-    res.writeHead(302, {
-      Location:
-        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token",
-      //add other headers here...
-    });
-    res.end();
-  } else {
-    res.status(200).json({ data: req.query });
-  }
+  const callback = console.log(req.query);
+  const code = req.query.code;
+  fetch(
+    `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token?grant_type=authorization_code&code=${code}&redirect_uri=https://idp-nextjs-test.netlify.app/api/auth/callback/idp`,
+    {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic b2lkYy1wcGQtdGVzdDpUM2MwMjAyMV8=",
+      },
+      body: JSON.stringify(callback),
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => res.status(200).json(data));
 }

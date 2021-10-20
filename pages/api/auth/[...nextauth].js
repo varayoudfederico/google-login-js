@@ -41,7 +41,7 @@ export default NextAuth({
         "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/.well-known/openid-configuration",
       authorization: { params: { scope: "openid profile" } },
       idToken: true,
-      checks: ["state"],
+      checks: ["both"],
       clientId: process.env.IDP_CLIENT_ID,
       clientSecret: process.env.IDP_CLIENT_SECRET,
       profile(profile) {

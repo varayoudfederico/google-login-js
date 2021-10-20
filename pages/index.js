@@ -30,7 +30,7 @@ const Home = () => {
       </Head>
 
       <main className="p-12">
-        <h1 className="text-2xl font-bold pb-4">Login test with next-auth</h1>
+        <h1 className="text-2xl font-bold pb-4">Login with next-auth</h1>
 
         {loading ? (
           <p>Cargando...</p>

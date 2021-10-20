@@ -10,13 +10,12 @@ const Success = ({ token }) => {
   const [decodedData, setDecodedData] = useState(null);
 
   useEffect(() => {
-    console.log(jwt_decode(token));
     setDecodedData(jwt_decode(token));
+    console.log(decodedData);
   }, [token]);
 
   const logout = () => {
-    console.log("Redirigiendo al IDP...");
-    const clientId = "oidc-ppd-test";
+    console.log("Logout...");
     const redirect_uri = encodeURI(
       "https://idp-nextjs-test.netlify.app/api/auth/signout"
     );
@@ -28,14 +27,14 @@ const Success = ({ token }) => {
   return (
     <>
       <Head>
-        <title>Callback | IDP with next-auth test</title>
+        <title>Success | IDP with next-auth test</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="p-12">
         <h1 className="text-2xl font-bold pb-4">Success</h1>
         <p>Token: {token}</p>
-        <p>Sub: {decodedData.sub}</p>
+        <p>Sub: {decodedData?.sub}</p>
         <button className="btn-blue pt-16" onClick={() => IDPManualLogin()}>
           Login
         </button>

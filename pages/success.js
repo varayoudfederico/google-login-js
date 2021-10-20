@@ -6,7 +6,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import axios from "axios";
 import { Router, useRouter } from "next/dist/client/router";
 
-const Success = ({ token }) => {
+const Success = ({ id_token, access_token, refresh_token }) => {
   const [decodedData, setDecodedData] = useState(null);
   const router = useRouter();
 
@@ -35,10 +35,16 @@ const Success = ({ token }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="p-12 max-w-6xl">
+      <main className="p-12 max-w-6xl flex flex-col">
         <h1 className="text-2xl font-bold pb-4">Success</h1>
         <p>
-          <span className="font-bold">Token:</span> {token}
+          <span className="font-bold">ID Token:</span> {id_token}
+        </p>
+        <p>
+          <span className="font-bold">Access Token:</span> {access_token}
+        </p>
+        <p>
+          <span className="font-bold">Refresh Token:</span> {refresh_token}
         </p>
         <p>
           <span className="font-bold">Sub:</span> {decodedData?.sub}
@@ -53,11 +59,15 @@ const Success = ({ token }) => {
 
 export async function getServerSideProps(context) {
   try {
-    if (context.query.token) {
-      const token = context.query.token;
+    if (context.query.id_token) {
+      const id_token = context.query.id_token;
+      const access_token = context.query.access_token;
+      const refresh_token = context.query.refresh_token;
       return {
         props: {
-          token: token,
+          id_token: id_token,
+          access_token: access_token,
+          refresh_token: refresh_token,
         },
       };
     } else {

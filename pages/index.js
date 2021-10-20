@@ -1,11 +1,12 @@
 import Head from "next/head";
 import { useEffect } from "react";
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signIn, signOut, useSession } from "next-auth/react";
 import axios from "axios";
 
 const Home = () => {
   //hook de next-auth para obtener los datos del usuario logueado
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession()
+  const loading = status === "loading"
 
   //metodo de ejemplo para pegarle a un endpoint que usa el token de login para autorizar
   const getData = async () => {

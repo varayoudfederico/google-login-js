@@ -1,9 +1,12 @@
 import Head from "next/head";
 
 import { useRouter } from "next/dist/client/router";
+import { useEffect } from "react";
 
 const Home = () => {
   const router = useRouter();
+
+ 
 
   const login = () => {
     console.log("Redirigiendo al IDP...");

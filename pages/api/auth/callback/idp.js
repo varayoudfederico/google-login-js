@@ -2,13 +2,19 @@ export default function handler(req, res) {
   try {
     const callback = console.log(req.query);
     const code = req.query.code;
+
+    const encoded = Buffer.from(
+      `${process.env.NEXT_PUBLIC_IDP_CLIENT_ID}:${process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET}`,
+      "binary"
+    ).toString("base64");
+
     fetch(
       `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token?grant_type=authorization_code&code=${code}&redirect_uri=https://idp-nextjs-test.netlify.app/api/auth/callback/idp`,
       {
         method: "post",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Basic b2lkYy1wcGQtdGVzdDpUM2MwMjAyMV8=",
+          Authorization: `Basic ${encoded}`,
         },
         body: JSON.stringify(callback),
       }

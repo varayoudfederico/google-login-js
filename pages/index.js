@@ -7,7 +7,8 @@ const Home = () => {
 
   const login = () => {
     console.log("Redirigiendo al IDP...");
-    const clientId = process.env.IDP_CLIENT_ID;
+    const clientId = process.env.NEXT_PUBLIC_IDP_CLIENT_ID;
+    console.log(clientId);
     const redirectURI = encodeURI(
       "https://idp-nextjs-test.netlify.app/api/auth/callback/idp"
     );

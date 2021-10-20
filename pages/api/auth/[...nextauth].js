@@ -28,10 +28,29 @@ export default NextAuth({
   // secret: process.env.SECRET,
   // Configure one or more authentication providers
   providers: [
-    GoogleProvider({
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_CLIENT_ID,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    // }),
+    {
+      id: "google",
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
+      name: "Google",
+      type: "oauth",
+      wellKnown: "https://accounts.google.com/.well-known/openid-configuration",
+      authorization: { params: { scope: "openid email profile" } },
+      idToken: true,
+      checks: ["pkce", "state"],
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+        };
+      },
+    },
 
     {
       id: "idp",
@@ -44,14 +63,14 @@ export default NextAuth({
       checks: ["both"],
       clientId: process.env.IDP_CLIENT_ID,
       clientSecret: process.env.IDP_CLIENT_SECRET,
-      profile(profile) {
-        return {
-          sub: profile.sub,
-          // name: profile.name,
-          // email: profile.email,
-          // image: profile.picture,
-        };
-      },
+      // profile(profile) {
+      //   return {
+      //     sub: profile.sub,
+      //     // name: profile.name,
+      //     // email: profile.email,
+      //     // image: profile.picture,
+      //   };
+      // },
     },
 
     // {

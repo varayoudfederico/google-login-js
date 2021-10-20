@@ -1,6 +1,10 @@
+
+
 export default function handler(req, res) {
   console.log(req.query);
-  if (req.query.code) {
+  if (!req.query.code) {
+      code = req.query.code
+
     res.writeHead(302, {
       Location:
         "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token",

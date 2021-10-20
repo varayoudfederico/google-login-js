@@ -1,7 +1,6 @@
 import Head from "next/head";
-import { useEffect } from "react";
-import axios from "axios";
-import { Router, useRouter } from "next/dist/client/router";
+
+import { useRouter } from "next/dist/client/router";
 
 const Home = () => {
   const router = useRouter();

@@ -9,12 +9,14 @@ import { Router, useRouter } from "next/dist/client/router";
 const Success = ({ token }) => {
   const [decodedData, setDecodedData] = useState(null);
   const router = useRouter();
-  
+
   useEffect(() => {
     if (token) setDecodedData(jwt_decode(token));
-
-    console.log(decodedData);
   }, [token]);
+
+  useEffect(() => {
+    console.log("Decoded JWT: ", decodedData);
+  }, [decodedData]);
 
   const logout = () => {
     console.log("Logout...");
@@ -33,10 +35,14 @@ const Success = ({ token }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="p-12">
+      <main className="p-12 max-w-6xl">
         <h1 className="text-2xl font-bold pb-4">Success</h1>
-        <p>Token: {token}</p>
-        <p>Sub: {decodedData?.sub}</p>
+        <p>
+          <span className="font-bold">Token:</span> {token}
+        </p>
+        <p>
+          <span className="font-bold">Sub:</span> {decodedData?.sub}
+        </p>
         <button className="btn-blue mt-16" onClick={() => logout()}>
           Logout
         </button>

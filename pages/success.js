@@ -11,8 +11,8 @@ const Success = ({ id_token, access_token, refresh_token }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (token) setDecodedData(jwt_decode(token));
-  }, [token]);
+    if (id_token) setDecodedData(jwt_decode(id_token));
+  }, [id_token]);
 
   useEffect(() => {
     console.log("Decoded JWT: ", decodedData);

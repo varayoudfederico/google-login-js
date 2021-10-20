@@ -1,8 +1,6 @@
 export default function handler(req, res) {
   try {
-    const callback = console.log(req.query);
     const code = req.query.code;
-
     const encoded = Buffer.from(
       `${process.env.NEXT_PUBLIC_IDP_CLIENT_ID}:${process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET}`,
       "binary"
@@ -16,16 +14,10 @@ export default function handler(req, res) {
           "Content-Type": "application/json",
           Authorization: `Basic ${encoded}`,
         },
-        body: JSON.stringify(callback),
       }
     )
       .then((res) => res.json())
       .then((data) => {
-        //res.status(200).json(data);
-        // res.cookie("idp_token", data.id_token, {
-        //   maxAge: 900000,
-        //   httpOnly: true,
-        // });
         const id_token = data.id_token || "";
         const access_token = data.access_token || "";
         const refresh_token = data.refresh_token || "";

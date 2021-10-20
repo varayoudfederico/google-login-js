@@ -1,10 +1,8 @@
 import Head from "next/head";
-
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
-import { signIn, signOut, useSession } from "next-auth/react";
-import axios from "axios";
-import { Router, useRouter } from "next/dist/client/router";
+
+import { useRouter } from "next/dist/client/router";
 
 const Success = ({ id_token, access_token, refresh_token }) => {
   const [decodedData, setDecodedData] = useState(null);
@@ -20,11 +18,12 @@ const Success = ({ id_token, access_token, refresh_token }) => {
 
   const logout = () => {
     console.log("Logout...");
+
     const redirect_uri = encodeURI(
       "https://idp-nextjs-test.netlify.app/api/auth/signout"
     );
-
     const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${id_token}&post_logout_redirect_uri=${redirect_uri}`;
+    
     router.push(url);
   };
 

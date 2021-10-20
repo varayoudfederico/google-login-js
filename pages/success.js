@@ -1,18 +1,29 @@
 import Head from "next/head";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { signIn, signOut, useSession } from "next-auth/react";
 import axios from "axios";
 import { Router, useRouter } from "next/dist/client/router";
 
 const Success = ({ token }) => {
-  useEffect(
-    () => {
-      console.log(jwt_decode(token));
-    },
-    { token }
-  );
+  const [decodedData, setDecodedData] = useState(null);
+
+  useEffect(() => {
+    console.log(jwt_decode(token));
+    setDecodedData(jwt_decode(token));
+  }, [token]);
+
+  const logout = () => {
+    console.log("Redirigiendo al IDP...");
+    const clientId = "oidc-ppd-test";
+    const redirect_uri = encodeURI(
+      "https://idp-nextjs-test.netlify.app/api/auth/signout"
+    );
+
+    const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${token}&post_logout_redirect_uri=${redirect_uri}`;
+    router.push(url);
+  };
 
   return (
     <>
@@ -24,6 +35,10 @@ const Success = ({ token }) => {
       <main className="p-12">
         <h1 className="text-2xl font-bold pb-4">Success</h1>
         <p>Token: {token}</p>
+        <p>Sub: {decodedData.sub}</p>
+        <button className="btn-blue pt-16" onClick={() => IDPManualLogin()}>
+          Login
+        </button>
       </main>
     </>
   );

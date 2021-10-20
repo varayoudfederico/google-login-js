@@ -1,11 +1,19 @@
 import Head from "next/head";
 
 import { useEffect } from "react";
+import jwt_decode from "jwt-decode";
 import { signIn, signOut, useSession } from "next-auth/react";
 import axios from "axios";
 import { Router, useRouter } from "next/dist/client/router";
 
 const Success = ({ token }) => {
+  useEffect(
+    () => {
+      console.log(jwt_decode(token));
+    },
+    { token }
+  );
+
   return (
     <>
       <Head>

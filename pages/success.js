@@ -8,7 +8,8 @@ import { Router, useRouter } from "next/dist/client/router";
 
 const Success = ({ token }) => {
   const [decodedData, setDecodedData] = useState(null);
-
+  const router = useRouter();
+  
   useEffect(() => {
     if (token) setDecodedData(jwt_decode(token));
 

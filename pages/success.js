@@ -59,7 +59,11 @@ const Success = ({ id_token, access_token, refresh_token }) => {
 
 export async function getServerSideProps(context) {
   try {
-    if (context.query.id_token) {
+    if (
+      context.query.id_token &&
+      context.query.access_token &&
+      context.query.refresh_token
+    ) {
       const id_token = context.query.id_token;
       const access_token = context.query.access_token;
       const refresh_token = context.query.refresh_token;
@@ -73,7 +77,9 @@ export async function getServerSideProps(context) {
     } else {
       return {
         props: {
-          token: null,
+          id_token: null,
+          access_token: null,
+          refresh_token: null,
         },
       };
     }

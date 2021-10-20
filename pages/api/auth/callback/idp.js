@@ -15,12 +15,12 @@ export default function handler(req, res) {
     )
       .then((res) => res.json())
       .then((data) => {
-        // res.status(200).json(data);
-        res.cookie("idp_token", data.id_token, {
-          maxAge: 900000,
-          httpOnly: true,
-        });
-        res.redirect("/success");
+        //res.status(200).json(data);
+        // res.cookie("idp_token", data.id_token, {
+        //   maxAge: 900000,
+        //   httpOnly: true,
+        // });
+        res.redirect(`/success?token=${data.id_token}`);
       });
   } catch (error) {
     res.status(500).json(error);

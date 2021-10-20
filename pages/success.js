@@ -10,7 +10,8 @@ const Success = ({ token }) => {
   const [decodedData, setDecodedData] = useState(null);
 
   useEffect(() => {
-    setDecodedData(jwt_decode(token));
+    if (token) setDecodedData(jwt_decode(token));
+
     console.log(decodedData);
   }, [token]);
 
@@ -35,8 +36,8 @@ const Success = ({ token }) => {
         <h1 className="text-2xl font-bold pb-4">Success</h1>
         <p>Token: {token}</p>
         <p>Sub: {decodedData?.sub}</p>
-        <button className="btn-blue pt-16" onClick={() => IDPManualLogin()}>
-          Login
+        <button className="btn-blue mt-16" onClick={() => logout()}>
+          Logout
         </button>
       </main>
     </>
@@ -45,18 +46,25 @@ const Success = ({ token }) => {
 
 export async function getServerSideProps(context) {
   try {
-    const token = context.query.token;
-
-    return {
-      props: {
-        token: token,
-      },
-    };
+    if (context.query.token) {
+      const token = context.query.token;
+      return {
+        props: {
+          token: token,
+        },
+      };
+    } else {
+      return {
+        props: {
+          token: null,
+        },
+      };
+    }
   } catch (error) {
     console.error(error);
     return {
       props: {
-        token: "not_found",
+        err: "not_found",
       },
     };
   }

@@ -1,3 +1,4 @@
 export default function handler(req, res) {
-  res.status(200).json({ name: "Redirect" });
+  console.log(req.query);
+  res.status(200).json({ data: req.query });
 }

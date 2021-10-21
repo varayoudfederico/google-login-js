@@ -1,10 +1,22 @@
 import { serialize, CookieSerializeOptions } from "cookie";
 
-export const setCookie = (res, name, value, options) => {
-  const stringValue =
-    typeof value === "object" ? "j:" + JSON.stringify(value) : String(value);
+export const setCookie = (res, id, refresh, access, options) => {
+  const idValue =
+    typeof id === "object" ? "j:" + JSON.stringify(id) : String(id);
 
-  res.setHeader("Set-Cookie", serialize(name, stringValue, options));
+  res.setHeader("Set-Cookie", serialize("idp_id_token", idValue, options));
+
+  const refreshValue =
+    typeof refresh === "object"
+      ? "j:" + JSON.stringify(refresh)
+      : String(refresh);
+
+  res.setHeader("Set-Cookie", serialize("idp_id_token", refreshValue, options));
+
+  const accessValue =
+    typeof access === "object" ? "j:" + JSON.stringify(access) : String(access);
+
+  res.setHeader("Set-Cookie", serialize("idp_id_token", accessValue, options));
 };
 
 export default function handler(req, res) {
@@ -27,11 +39,11 @@ export default function handler(req, res) {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
         const id_token = data.id_token || "";
         const access_token = data.access_token || "";
         const refresh_token = data.refresh_token || "";
-        setCookie(res, "idp_id_token", id_token, { path: "/" });
+        setCookie(res, id_token, refresh_token, access_token, { path: "/" });
         // setCookie(res, "idp_access_token", access_token, { path: "/" });
         // setCookie(res, "idp_refresh_token", refresh_token, { path: "/" });
         res.redirect(`/success`);

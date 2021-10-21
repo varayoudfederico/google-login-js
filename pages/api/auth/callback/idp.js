@@ -12,16 +12,11 @@ export const setCookie = (res, id, refresh, access, options) => {
   const accessValue =
     typeof access === "object" ? "j:" + JSON.stringify(access) : String(access);
 
-  res
-    .setHeader("Set-Cookie", serialize("idp_id_token", idValue, options))
-    .setHeader(
-      "Set-Cookie",
-      serialize("idp_refresh_token", refreshValue, options)
-    )
-    .setHeader(
-      "Set-Cookie",
-      serialize("idp_access_token", accessValue, options)
-    );
+  res.setHeader("Set-Cookie", [
+    serialize("idp_id_token", idValue, options),
+    serialize("idp_refresh_token", refreshValue, options),
+    serialize("idp_access_token", accessValue, options),
+  ]);
 };
 
 export default function handler(req, res) {

@@ -32,7 +32,9 @@ const Success = () => {
     const redirect_uri = encodeURI(
       "https://idp-nextjs-test.netlify.app/api/auth/signout"
     );
-    const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${id_token}&post_logout_redirect_uri=${redirect_uri}`;
+    const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${cookieCutter.get(
+      "idp_id_token"
+    )}&post_logout_redirect_uri=${redirect_uri}`;
 
     router.push(url);
   };

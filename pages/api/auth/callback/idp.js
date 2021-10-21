@@ -27,6 +27,7 @@ export default function handler(req, res) {
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         const id_token = data.id_token || "";
         const access_token = data.access_token || "";
         const refresh_token = data.refresh_token || "";

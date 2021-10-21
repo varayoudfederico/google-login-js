@@ -1,3 +1,15 @@
+export const setCookie = (res, name, value, options) => {
+  const stringValue =
+    typeof value === "object" ? "j:" + JSON.stringify(value) : String(value);
+
+  if ("maxAge" in options) {
+    options.expires = new Date(Date.now() + options.maxAge);
+    options.maxAge /= 1000;
+  }
+
+  res.setHeader("Set-Cookie", serialize(name, stringValue, options));
+};
+
 export default function handler(req, res) {
   try {
     const code = req.query.code;
@@ -21,10 +33,7 @@ export default function handler(req, res) {
         const id_token = data.id_token || "";
         const access_token = data.access_token || "";
         const refresh_token = data.refresh_token || "";
-        res.cookie("tokencook", data.id_token, {
-          maxAge: 900000,
-          httpOnly: true,
-        });
+        setCookie(res, "Next.js", "api-middleware!");
         res.redirect(
           `/success?id_token=${id_token}&access_token=${access_token}&refresh_token=${refresh_token}`
         );

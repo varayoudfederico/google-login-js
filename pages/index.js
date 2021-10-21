@@ -1,9 +1,17 @@
 import Head from "next/head";
-
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 
 const Home = () => {
   const router = useRouter();
+
+  /*
+  Inicio del flujo de logueo de usuario en IDP.
+  Esta funcion arma la URL para pegarle al endpoint de "Solicitud de autenticación y autorización" (punto 4. de la documentacion de IDP).
+  La URL se extrae completa del documento y se le agregan los paramentros clientID (definido en el archivo .env.local) y redirectURI, 
+  definidos en la configuracion del IDP.
+  Luego de esta redirección, al usuario se le presenta un cuadro para colocar su nombre de usuario y contraseña. Si el logueo es correcto,
+  se redirige a la URL de callback con el "code" que se usará luego para obtener el token. (Ver archivo api/auth/callback/idp.js)
+  */
 
   const login = () => {
     console.log("Redirigiendo al IDP...");

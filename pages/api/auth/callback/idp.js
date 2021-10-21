@@ -19,6 +19,22 @@ export const setCookies = (res, id, refresh, access, options) => {
   ]);
 };
 
+/*
+Segundo paso del flujo de logueo en IDP.
+Luego de que el usuario se haya logueado de forma exitosa, el IDP redirige a la URL de esta API.
+Dentro de esa redirección, el parametro mas importante es "code", necesario para canjearlo por un token valido
+en el endpoint de Solicitud de Token (punto 5. de la documentacion de IDP).
+Para obtener este token, se debe pegar al endpoint con el metodo POST. La URL del endpoint se extrae de la documentacion,
+solo se le agrega la variable code, extraida de la respuesta del endpoint anterior.
+Este endpoint requiere un header para funcionar correctamente. Este header contiene los parametros "Content-Type" y "Authorization".
+Authorization contiene los datos clientId y clientSecret, ambos definidos en el archivo .env, los cuales son pasados por un encode y 
+agregados al header.
+Si la pegada es exitosa, el endpoint devuelve varios datos, entre ellos se extraen los token de acceso necesarios para el funcionamiento de la pagina:
+ID TOKEN (Tiene la informacion del usuario), ACCESS TOKEN y REFRESH TOKEN.
+Estos token se pasan a la funcion setCookies, la cual setea una Cookie para cada uno de los token, para que estos puedan ser accedidos por el front.
+Luego de agregar las cookies con los token a la respuesta, se hace una redireccion a la pagina /success.
+*/
+
 export default function handler(req, res) {
   try {
     const code = req.query.code;

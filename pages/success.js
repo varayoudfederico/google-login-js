@@ -19,7 +19,6 @@ const Success = () => {
     console.log("ACCESS TOKEN: ", access_token);
 
     if (id_token) {
-      console.log("token from cookie", id_token);
       setDecodedData(jwt_decode(id_token));
     }
   }, []);
@@ -60,41 +59,5 @@ const Success = () => {
     </>
   );
 };
-
-// export async function getServerSideProps(context) {
-//   try {
-//     if (
-//       context.query.id_token &&
-//       context.query.access_token &&
-//       context.query.refresh_token
-//     ) {
-//       const id_token = context.query.id_token;
-//       const access_token = context.query.access_token;
-//       const refresh_token = context.query.refresh_token;
-//       return {
-//         props: {
-//           id_token: id_token,
-//           access_token: access_token,
-//           refresh_token: refresh_token,
-//         },
-//       };
-//     } else {
-//       return {
-//         props: {
-//           id_token: null,
-//           access_token: null,
-//           refresh_token: null,
-//         },
-//       };
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     return {
-//       props: {
-//         err: "not_found",
-//       },
-//     };
-//   }
-// }
 
 export default Success;

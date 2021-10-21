@@ -6,15 +6,15 @@ export const setCookie = (res, id, refresh, access, options) => {
 
   res.setHeader("Set-Cookie", serialize("idp_id_token", idValue, options));
 
-  // const refreshValue =
-  //   typeof refresh === "object"
-  //     ? "j:" + JSON.stringify(refresh)
-  //     : String(refresh);
+  const refreshValue =
+    typeof refresh === "object"
+      ? "j:" + JSON.stringify(refresh)
+      : String(refresh);
 
-  // res.setHeader(
-  //   "Set-Cookie",
-  //   serialize("idp_refresh_token", refreshValue, options)
-  // );
+  res.setHeader(
+    "Set-Cookie",
+    serialize("idp_refresh_token", refreshValue, options)
+  );
 
   // const accessValue =
   //   typeof access === "object" ? "j:" + JSON.stringify(access) : String(access);

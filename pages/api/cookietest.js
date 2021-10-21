@@ -14,7 +14,9 @@ export const setCookie = (res, name, value, options) => {
 
   // }
 
-  res.setHeader("Set-Cookie", serialize(name, stringValue, options));
+  res
+    .setHeader("Set-Cookie", serialize(name, stringValue, options))
+    .setHeader("Set-Cookie", serialize("cookie2", stringValue, options));
 };
 
 export default function handler(req, res) {

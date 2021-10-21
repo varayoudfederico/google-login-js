@@ -4,25 +4,24 @@ export const setCookie = (res, id, refresh, access, options) => {
   const idValue =
     typeof id === "object" ? "j:" + JSON.stringify(id) : String(id);
 
-  res.setHeader("Set-Cookie", serialize("idp_id_token", idValue, options));
+  const refreshValue =
+    typeof refresh === "object"
+      ? "j:" + JSON.stringify(refresh)
+      : String(refresh);
 
-  // const refreshValue =
-  //   typeof refresh === "object"
-  //     ? "j:" + JSON.stringify(refresh)
-  //     : String(refresh);
+  const accessValue =
+    typeof access === "object" ? "j:" + JSON.stringify(access) : String(access);
 
-  // res.setHeader(
-  //   "Set-Cookie",
-  //   serialize("idp_refresh_token", refreshValue, options)
-  // );
-
-  // const accessValue =
-  //   typeof access === "object" ? "j:" + JSON.stringify(access) : String(access);
-
-  // res.setHeader(
-  //   "Set-Cookie",
-  //   serialize("idp_access_token", accessValue, options)
-  // );
+  res
+    .setHeader("Set-Cookie", serialize("idp_id_token", idValue, options))
+    .setHeader(
+      "Set-Cookie",
+      serialize("idp_refresh_token", refreshValue, options)
+    )
+    .setHeader(
+      "Set-Cookie",
+      serialize("idp_access_token", accessValue, options)
+    );
 };
 
 export default function handler(req, res) {

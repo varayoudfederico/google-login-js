@@ -31,8 +31,8 @@ export default function handler(req, res) {
         const access_token = data.access_token || "";
         const refresh_token = data.refresh_token || "";
         setCookie(res, "idp_id_token", id_token, { path: "/" });
-        setCookie(res, "idp_id_token", access_token, { path: "/" });
-        setCookie(res, "idp_id_token", refresh_token, { path: "/" });
+        setCookie(res, "idp_access_token", access_token, { path: "/" });
+        setCookie(res, "idp_refresh_token", refresh_token, { path: "/" });
         res.redirect(`/success`);
       });
   } catch (error) {

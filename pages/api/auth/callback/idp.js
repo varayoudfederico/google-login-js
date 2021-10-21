@@ -1,6 +1,6 @@
 import { serialize, CookieSerializeOptions } from "cookie";
 
-export const setCookie = (res, id, refresh, access, options) => {
+export const setCookies = (res, id, refresh, access, options) => {
   const idValue =
     typeof id === "object" ? "j:" + JSON.stringify(id) : String(id);
 
@@ -43,9 +43,7 @@ export default function handler(req, res) {
         const id_token = data.id_token || "";
         const access_token = data.access_token || "";
         const refresh_token = data.refresh_token || "";
-        setCookie(res, id_token, refresh_token, access_token, { path: "/" });
-        // setCookie(res, "idp_access_token", access_token, { path: "/" });
-        // setCookie(res, "idp_refresh_token", refresh_token, { path: "/" });
+        setCookies(res, id_token, refresh_token, access_token, { path: "/" });
         res.redirect(`/success`);
       });
   } catch (error) {

@@ -15,7 +15,8 @@ export const setCookie = (res, name, value, options) => {
 export default function handler(req, res) {
   try {
     setCookie(res, "Next.js", "api-middleware!");
-    res.end(res.getHeader("Set-Cookie"));
+    // res.end(res.getHeader("Set-Cookie"));
+    res.redirect("/");
   } catch (error) {
     console.log(error);
     res.status(500).json(error);

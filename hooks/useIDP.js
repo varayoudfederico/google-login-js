@@ -12,8 +12,8 @@ const useIDP = () => {
 
   useEffect(() => {
     console.log("Reading cookies...");
-    // const id_token = cookieCutter.get("idp_id_token");
-    const id_token = demoToken;
+    const id_token = cookieCutter.get("idp_id_token");
+    // const id_token = demoToken;
     const refresh_token = cookieCutter.get("idp_refresh_token");
     const access_token = cookieCutter.get("idp_access_token");
 

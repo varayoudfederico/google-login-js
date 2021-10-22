@@ -59,7 +59,11 @@ export default function handler(req, res) {
         const id_token = data.id_token || "";
         const access_token = data.access_token || "";
         const refresh_token = data.refresh_token || "";
-        setCookies(res, id_token, refresh_token, access_token, { path: "/" });
+        setCookies(res, id_token, refresh_token, access_token, {
+          path: "/",
+          httpOnly: true,
+          sameSite: "lax",
+        });
         res.redirect(`/success`);
       });
   } catch (error) {

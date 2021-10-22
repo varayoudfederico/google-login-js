@@ -46,7 +46,7 @@ const useIDP = () => {
     console.log("Redirigiendo al IDP...");
     const clientId = process.env.NEXT_PUBLIC_IDP_CLIENT_ID;
     const redirectURI = encodeURI(
-      "https://idp-nextjs-test.netlify.app/api/auth/callback/idp"
+      "https://idp-nextjs-test2.netlify.app/api/auth/callback/idp"
     );
     const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectURI}&scope=openid+profile&state=doeeHdmVTm67Am1oc3QXHyMQTKcMPoc2MqguEDqxZwE&nonce=MacymmlRaarX4sqw6BhoHOGzjLjj89VUj7sFuNvEYXA`;
     router.push(url);
@@ -57,7 +57,7 @@ const useIDP = () => {
     const idToken = cookieCutter.get("idp_id_token") || "";
     if (idToken) {
       const redirect_uri = encodeURI(
-        "https://idp-nextjs-test.netlify.app/api/auth/signout"
+        "https://idp-nextjs-test.netlify2.app/api/auth/signout"
       );
       const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${idToken}&post_logout_redirect_uri=${redirect_uri}`;
       router.push(url);

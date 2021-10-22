@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import useIDP from "../hooks/useIDP";
@@ -15,7 +16,7 @@ Una vez que el usuario quiera cerrar sesion, presiona el boton Logout, el cual l
 */
 
 const Success = () => {
-  const { logout, decodedData } = useIDP();
+  const { IDPlogout, decodedData } = useIDP();
 
   return (
     <>
@@ -25,11 +26,16 @@ const Success = () => {
       </Head>
 
       <main className="p-12 max-w-6xl flex flex-col">
-        <h1 className="text-2xl font-bold pb-4">Success</h1>
+        <h1 className="text-2xl font-bold pb-4">Logueo con exito!</h1>
         <p>
           <span className="font-bold">Sub:</span> {decodedData?.sub}
         </p>
-        <button className="btn-blue mt-16" onClick={() => logout()}>
+        <Link href="/">
+          <a>
+            <button className="btn-blue mt-16">Volver al inicio</button>
+          </a>
+        </Link>
+        <button className="btn-blue mt-16" onClick={() => IDPlogout()}>
           Logout
         </button>
       </main>

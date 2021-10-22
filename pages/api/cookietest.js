@@ -4,6 +4,11 @@ export const setCookie = (res, name, value, options) => {
   const stringValue =
     typeof value === "object" ? "j:" + JSON.stringify(value) : String(value);
 
+  if ("maxAge" in options) {
+    options.expires = new Date(Date.now() + options.maxAge);
+    options.maxAge /= 1000;
+  }
+
   // if ("maxAge" in options) {
   //   console.log("Max age");
   //   options.expires = new Date(Date.now() + options.maxAge);
@@ -27,7 +32,7 @@ export default function handler(req, res) {
       res,
       "demo_token1",
       "eyJhbGciOiJIUzUxMiJ9.eyJuYW1lIjoiRmVkZXJpY28gVmFyYXlvdWQiLCJlbWFpbCI6InZhcmF5b3VkZmVkZXJpY29AZ21haWwuY29tIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdod1AtUW5sT2xiTDdOcU5HbWtfV3FRdnZISTVIa2hRMWFNdW1fUU5nPXM5Ni1jIiwic3ViIjoiMTA4NTk0NDI2NzIwMDg2OTMyOTE2IiwiaWF0IjoxNjM0ODI3NzU2LCJleHAiOjE2Mzc0MTk3NTZ9.V1qJGETQsAFP4cHQ9kkCJmnnqQlgjLyjcZBik7VrS4BwQJjVuTWJx4vlQm6H6nyViqjZt1BaNQ7lmkGHszUvbg",
-      { path: "/" }
+      { path: "/", maxAge: 1800000 }
     );
 
     res.redirect("/success");

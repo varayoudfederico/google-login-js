@@ -12,6 +12,12 @@ export const setCookies = (res, id, refresh, access, options) => {
   const accessValue =
     typeof access === "object" ? "j:" + JSON.stringify(access) : String(access);
 
+  // valor de la duracion de la cookie, en ms
+  if ("maxAge" in options) {
+    options.expires = new Date(Date.now() + options.maxAge);
+    options.maxAge /= 1000;
+  }
+
   res.setHeader("Set-Cookie", [
     serialize("idp_id_token", idValue, options),
     serialize("idp_refresh_token", refreshValue, options),
@@ -63,6 +69,7 @@ export default function handler(req, res) {
           path: "/",
           httpOnly: false,
           sameSite: "lax",
+          maxAge: 1800000,
         });
         res.redirect(`/success`);
       });

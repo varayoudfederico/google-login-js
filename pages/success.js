@@ -15,7 +15,7 @@ const Success = () => {
       </Head>
 
       <main className="p-12 max-w-6xl flex flex-col">
-        <h1 className="text-2xl font-bold pb-4">Logueo con exito!</h1>
+        <h1 className="text-2xl font-bold pb-4">Login con exito!</h1>
         <p>
           <span className="font-bold">Sub:</span> {user?.sub}
         </p>

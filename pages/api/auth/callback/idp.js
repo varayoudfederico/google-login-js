@@ -61,7 +61,7 @@ export default function handler(req, res) {
         const refresh_token = data.refresh_token || "";
         setCookies(res, id_token, refresh_token, access_token, {
           path: "/",
-          httpOnly: true,
+          httpOnly: false,
           sameSite: "lax",
         });
         res.redirect(`/success`);

@@ -55,15 +55,24 @@ const useIDP = () => {
   const logout = () => {
     console.log("Logout...");
     const idToken = cookieCutter.get("idp_id_token") || "";
+    deleteCookies();
+    setUser(null);
     if (idToken) {
       const redirect_uri = encodeURI(
         "https://idp-nextjs-test.netlify2.app/api/auth/signout"
       );
       const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${idToken}&post_logout_redirect_uri=${redirect_uri}`;
       router.push(url);
+    } else {
+      router.push("/");
     }
-    setUser(null);
-    //todo: aca borrar las cookies tambien
+  };
+
+  const deleteCookies = () => {
+    console.log("Deleting cookies...");
+    cookieCutter.set("idp_id_token", "", { expires: new Date(0) });
+    cookieCutter.set("idp_refresh_token", "", { expires: new Date(0) });
+    cookieCutter.set("idp_access_token", "", { expires: new Date(0) });
   };
 
   return { login, logout, user };

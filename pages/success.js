@@ -14,19 +14,30 @@ const Success = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="p-12 max-w-6xl flex flex-col">
-        <h1 className="text-2xl font-bold pb-4">Login con exito!</h1>
-        <p>
-          <span className="font-bold">Sub:</span> {user?.sub}
-        </p>
+      <main className="p-12 flex flex-col">
+        {user ? (
+          <>
+            <h1 className="text-2xl font-bold pb-4">Login con exito!</h1>
+            <p>
+              <span className="font-bold">Sub:</span> {user?.sub}
+            </p>
+            <button className="btn-blue mt-16 w-32" onClick={() => logout()}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <h1 className="text-2xl font-bold pb-4">
+              Hubo un error al loguear
+            </h1>
+          </>
+        )}
+
         <Link href="/">
           <a>
             <button className="btn-blue mt-16">Volver al inicio</button>
           </a>
         </Link>
-        <button className="btn-blue mt-16" onClick={() => logout()}>
-          Logout
-        </button>
       </main>
     </>
   );

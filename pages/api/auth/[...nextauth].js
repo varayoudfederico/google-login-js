@@ -22,7 +22,7 @@ export default NextAuth({
         console.log("tokens: ", tokens);
         return {
           id: profile.sub,
-          name: profile.sub,
+          sub: profile.sub,
         };
       },
     },

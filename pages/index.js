@@ -47,7 +47,7 @@ const Home = () => {
         ) : (
           <>
             <p className="font-bold text-xl my-4">Logueado!</p>
-            <p>ID: {session.user?.id}</p>
+            <p>ID: {session.user?.sub}</p>
             {/* <p>Email: {session.user?.email}</p>
             <p>ID: {session.user?.id}</p> */}
             <button className="btn-blue" onClick={() => signOut()}>

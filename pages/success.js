@@ -28,7 +28,7 @@ const Success = () => {
         ) : (
           <>
             <h1 className="text-2xl font-bold pb-4">
-              Hubo un error al loguear
+              Hubo un error en el login
             </h1>
           </>
         )}

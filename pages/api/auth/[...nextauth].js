@@ -65,10 +65,7 @@ export default NextAuth({
       clientSecret: process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET,
       profile(profile) {
         return {
-          sub: profile.sub,
-          // name: profile.name,
-          // email: profile.email,
-          // image: profile.picture,
+          ...profile,
         };
       },
     },

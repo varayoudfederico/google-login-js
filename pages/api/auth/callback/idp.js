@@ -44,6 +44,7 @@ Luego de agregar las cookies con los token a la respuesta, se hace una redirecci
 export default function handler(req, res) {
   try {
     const code = req.query.code;
+    console.log("Code: ", code)
     const encoded = Buffer.from(
       `${process.env.NEXT_PUBLIC_IDP_CLIENT_ID}:${process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET}`,
       "binary"

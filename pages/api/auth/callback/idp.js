@@ -1,4 +1,5 @@
 import { serialize, CookieSerializeOptions } from "cookie";
+import { CALLBACK_URI } from "../../../../config/constants";
 
 export const setCookies = (res, id, refresh, access, options) => {
   const idValue =
@@ -76,7 +77,7 @@ export default function handler(req, res) {
         res.redirect(`/success`);
       });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json(error);
   }
 }

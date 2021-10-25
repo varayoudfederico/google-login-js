@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import axios from "axios";
 
 const Home = () => {
   //hook de next-auth para obtener los datos del usuario logueado
@@ -47,7 +46,7 @@ const Home = () => {
         ) : (
           <>
             <p className="font-bold text-xl my-4">Logueado!</p>
-            <p>ID: {session.user?.sub}</p>
+            <p>Name: {session.user?.name}</p>
             {/* <p>Email: {session.user?.email}</p>
             <p>ID: {session.user?.id}</p> */}
             <button className="btn-blue" onClick={() => signOut()}>

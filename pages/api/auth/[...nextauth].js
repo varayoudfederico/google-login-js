@@ -63,9 +63,9 @@ export default NextAuth({
       // checks: ["none"],
       clientId: process.env.NEXT_PUBLIC_IDP_CLIENT_ID,
       clientSecret: process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET,
-      profile(profile) {
+      profile(OAuthProfile) {
         return {
-          ...profile,
+          ...OAuthProfile,
         };
       },
     },

@@ -5,8 +5,8 @@ import axios from "axios";
 
 const Home = () => {
   //hook de next-auth para obtener los datos del usuario logueado
-  const { data: session, status } = useSession()
-  const loading = status === "loading"
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
 
   //metodo de ejemplo para pegarle a un endpoint que usa el token de login para autorizar
   // const getData = async () => {
@@ -47,8 +47,8 @@ const Home = () => {
         ) : (
           <>
             <p className="font-bold text-xl my-4">Logueado!</p>
-            {/* <p>Nombre: {session.user?.name}</p>
-            <p>Email: {session.user?.email}</p>
+            <p>ID: {session.user?.id}</p>
+            {/* <p>Email: {session.user?.email}</p>
             <p>ID: {session.user?.id}</p> */}
             <button className="btn-blue" onClick={() => signOut()}>
               Logout

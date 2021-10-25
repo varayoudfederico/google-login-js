@@ -54,54 +54,54 @@ export default NextAuth({
 
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      // },
+      // {
+      //   id: "idp",
+      //   name: "IDP",
+      //   type: "oauth",
+      //   clientId: process.env.NEXT_PUBLIC_IDP_CLIENT_ID,
+      //   clientSecret: process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET,
+      //   wellKnown:
+      //     "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/.well-known/openid-configuration",
+      //   authorization: { params: { scope: "openid profile" } },
+      //   idToken: true,
+      //   // checks: ["pkce", "state"],
+      //   // profile(profile) {
+      //   //   return {
+      //   //     sub: profile.sub,
+      //   //     // name: profile.name,
+      //   //     // email: profile.email,
+      //   //     // image: profile.picture,
+      //   //   };
+      //   // },
     },
     {
       id: "idp",
       name: "IDP",
       type: "oauth",
+      version: "2.0",
+      scope: "openid profile",
+      params: { grant_type: "authorization_code" },
+      accessTokenUrl:
+        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token",
+      requestTokenUrl:
+        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize",
+      authorizationUrl:
+        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize?response_type=code",
+      profileUrl:
+        "https://idpsesiont.telecom.com.ar:443/openam/oauth2/convergente/userinfo",
+      async profile(profile, tokens) {
+        console.log("profile", profile);
+        // You can use the tokens, in case you want to fetch more profile information
+        // For example several OAuth providers do not return email by default.
+        // Depending on your provider, will have tokens like `access_token`, `id_token` and or `refresh_token`
+        return {
+          sub: profile.sub,
+        };
+      },
+
       clientId: process.env.NEXT_PUBLIC_IDP_CLIENT_ID,
       clientSecret: process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET,
-      wellKnown:
-        "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/.well-known/openid-configuration",
-      authorization: { params: { scope: "openid profile" } },
-      idToken: true,
-      // checks: ["pkce", "state"],
-      // profile(profile) {
-      //   return {
-      //     sub: profile.sub,
-      //     // name: profile.name,
-      //     // email: profile.email,
-      //     // image: profile.picture,
-      //   };
-      // },
     },
-    // {
-    //   id: "idp",
-    //   name: "IDP",
-    //   type: "oauth",
-    //   version: "2.0",
-    //   scope: "openid profile",
-    //   params: { grant_type: "authorization_code" },
-    //   accessTokenUrl:
-    //     "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token",
-    //   requestTokenUrl:
-    //     "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize",
-    //   authorizationUrl:
-    //     "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/authorize?response_type=code",
-    //   profileUrl:
-    //     "https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/.well-known/openid-configuration",
-    //   async profile(profile, tokens) {
-    //     // You can use the tokens, in case you want to fetch more profile information
-    //     // For example several OAuth providers do not return email by default.
-    //     // Depending on your provider, will have tokens like `access_token`, `id_token` and or `refresh_token`
-    //     return {
-    //       sub: profile.sub,
-    //       org: profile.org,
-    //     };
-    //   },
-
-    //   clientId: process.env.IDP_CLIENT_ID,
-    //   clientSecret: process.env.IDP_CLIENT_SECRET,
-    // },
   ],
 });

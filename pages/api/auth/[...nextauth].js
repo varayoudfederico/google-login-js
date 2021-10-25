@@ -61,8 +61,8 @@ export default NextAuth({
       authorization: { params: { scope: "openid profile" } },
       // idToken: true,
       // checks: ["none"],
-      clientId: process.env.IDP_CLIENT_ID,
-      clientSecret: process.env.IDP_CLIENT_SECRET,
+      clientId: process.env.NEXT_PUBLIC_IDP_CLIENT_ID,
+      clientSecret: process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET,
       // profile(profile) {
       //   return {
       //     sub: profile.sub,

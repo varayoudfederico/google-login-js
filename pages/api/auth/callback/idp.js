@@ -45,14 +45,14 @@ export default function handler(req, res) {
   try {
     const code = req.query.code;
     console.log("Code: ", code);
-    // res.redirect(`/success`);
     const encoded = Buffer.from(
       `${process.env.NEXT_PUBLIC_IDP_CLIENT_ID}:${process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET}`,
       "binary"
     ).toString("base64");
+    const redirectURI = encodeURI(CALLBACK_URI);
 
     fetch(
-      `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token?grant_type=authorization_code&code=${code}&redirect_uri=https://idp-nextjs-test2.netlify.app/api/auth/callback/idp`,
+      `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token?grant_type=authorization_code&code=${code}&redirect_uri=${redirectURI}`,
       {
         method: "post",
         headers: {

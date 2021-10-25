@@ -45,36 +45,36 @@ export default function handler(req, res) {
   try {
     const code = req.query.code;
     console.log("Code: ", code);
-    res.redirect(`/success`);
-    // const encoded = Buffer.from(
-    //   `${process.env.NEXT_PUBLIC_IDP_CLIENT_ID}:${process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET}`,
-    //   "binary"
-    // ).toString("base64");
+    // res.redirect(`/success`);
+    const encoded = Buffer.from(
+      `${process.env.NEXT_PUBLIC_IDP_CLIENT_ID}:${process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET}`,
+      "binary"
+    ).toString("base64");
 
-    // fetch(
-    //   `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token?grant_type=authorization_code&code=${code}&redirect_uri=https://idp-nextjs-test.netlify.app/api/auth/callback/idp`,
-    //   {
-    //     method: "post",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Basic ${encoded}`,
-    //     },
-    //   }
-    // )
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     const id_token = data.id_token || "";
-    //     const access_token = data.access_token || "";
-    //     const refresh_token = data.refresh_token || "";
-    //     setCookies(res, id_token, refresh_token, access_token, {
-    //       path: "/",
-    //       httpOnly: false,
-    //       sameSite: "lax",
-    //       maxAge: 1800000,
-    //     });
-    //     res.redirect(`/success`);
-    //   });
+    fetch(
+      `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token?grant_type=authorization_code&code=${code}&redirect_uri=https://idp-nextjs-test.netlify.app/api/auth/callback/idp`,
+      {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${encoded}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        const id_token = data.id_token || "";
+        const access_token = data.access_token || "";
+        const refresh_token = data.refresh_token || "";
+        setCookies(res, id_token, refresh_token, access_token, {
+          path: "/",
+          httpOnly: false,
+          sameSite: "lax",
+          maxAge: 1800000,
+        });
+        res.redirect(`/success`);
+      });
   } catch (error) {
     res.status(500).json(error);
   }

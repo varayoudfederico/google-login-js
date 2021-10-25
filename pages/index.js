@@ -9,14 +9,14 @@ const Home = () => {
   const loading = status === "loading"
 
   //metodo de ejemplo para pegarle a un endpoint que usa el token de login para autorizar
-  const getData = async () => {
-    try {
-      const { data } = await axios.get("/api/fetchWithToken");
-      console.log("Received data: ", data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     const { data } = await axios.get("/api/fetchWithToken");
+  //     console.log("Received data: ", data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   useEffect(() => {
     console.log("Session: ", session);
@@ -47,9 +47,9 @@ const Home = () => {
         ) : (
           <>
             <p className="font-bold text-xl my-4">Logueado!</p>
-            <p>Nombre: {session.user?.name}</p>
+            {/* <p>Nombre: {session.user?.name}</p>
             <p>Email: {session.user?.email}</p>
-            <p>ID: {session.user?.id}</p>
+            <p>ID: {session.user?.id}</p> */}
             <button className="btn-blue" onClick={() => signOut()}>
               Logout
             </button>

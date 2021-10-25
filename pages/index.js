@@ -3,19 +3,8 @@ import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Home = () => {
-  //hook de next-auth para obtener los datos del usuario logueado
   const { data: session, status } = useSession();
   const loading = status === "loading";
-
-  //metodo de ejemplo para pegarle a un endpoint que usa el token de login para autorizar
-  // const getData = async () => {
-  //   try {
-  //     const { data } = await axios.get("/api/fetchWithToken");
-  //     console.log("Received data: ", data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   useEffect(() => {
     console.log("Session: ", session);
@@ -47,13 +36,8 @@ const Home = () => {
           <>
             <p className="font-bold text-xl my-4">Logueado!</p>
             <p>Name: {session.user?.name}</p>
-            {/* <p>Email: {session.user?.email}</p>
-            <p>ID: {session.user?.id}</p> */}
             <button className="btn-blue" onClick={() => signOut()}>
               Logout
-            </button>
-            <button className="btn-blue" onClick={() => getData()}>
-              Get Data
             </button>
           </>
         )}

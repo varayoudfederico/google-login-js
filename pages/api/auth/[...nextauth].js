@@ -23,7 +23,6 @@ export default NextAuth({
         return {
           id: profile.sub,
           name: profile.sub,
-          relatedData: profile.relatedData,
         };
       },
     },

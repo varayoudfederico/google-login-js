@@ -3,54 +3,54 @@ import GoogleProvider from "next-auth/providers/google";
 // import Providers from "next-auth/providers";
 
 export default NextAuth({
-  callbacks: {
-    async jwt(token, account) {
-      console.log("token cb", token);
-      console.log("account cb", account);
-      // Persist the OAuth access_token to the token right after signin
-      if (account?.accessToken) {
-        token.accessToken = account.accessToken;
-      }
-      return token;
-    },
-    async session(session, token, user) {
-      console.log("session se", session);
-      console.log("token se", token);
-      console.log("user se", user);
-      // Send properties to the client, like an access_token from a provider.
-      // session.user.id = token.sub;
-      return session;
-    },
-  },
+  // callbacks: {
+  //   async jwt(token, account) {
+  //     console.log("token cb", token);
+  //     console.log("account cb", account);
+  //     // Persist the OAuth access_token to the token right after signin
+  //     if (account?.accessToken) {
+  //       token.accessToken = account.accessToken;
+  //     }
+  //     return token;
+  //   },
+  //   async session(session, token, user) {
+  //     console.log("session se", session);
+  //     console.log("token se", token);
+  //     console.log("user se", user);
+  //     // Send properties to the client, like an access_token from a provider.
+  //     // session.user.id = token.sub;
+  //     return session;
+  //   },
+  // },
   // jwt: {
   //   encryption: false,
   // },
   // secret: process.env.SECRET,
   // Configure one or more authentication providers
   providers: [
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    // }),
-    {
-      id: "google",
+    GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      name: "Google",
-      type: "oauth",
-      wellKnown: "https://accounts.google.com/.well-known/openid-configuration",
-      authorization: { params: { scope: "openid email profile" } },
-      idToken: true,
-      checks: ["pkce", "state"],
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-        };
-      },
-    },
+    }),
+    // {
+    //   id: "google",
+    //   clientId: process.env.GOOGLE_CLIENT_ID,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    //   name: "Google",
+    //   type: "oauth",
+    //   wellKnown: "https://accounts.google.com/.well-known/openid-configuration",
+    //   authorization: { params: { scope: "openid email profile" } },
+    //   idToken: true,
+    //   checks: ["pkce", "state"],
+    //   profile(profile) {
+    //     return {
+    //       id: profile.sub,
+    //       name: profile.name,
+    //       email: profile.email,
+    //       image: profile.picture,
+    //     };
+    //   },
+    // },
 
     {
       id: "idp",

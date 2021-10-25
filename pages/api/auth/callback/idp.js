@@ -52,7 +52,7 @@ export default function handler(req, res) {
     ).toString("base64");
 
     fetch(
-      `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token?grant_type=authorization_code&code=${code}&redirect_uri=https://idp-nextjs-test.netlify.app/api/auth/callback/idp`,
+      `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/access_token?grant_type=authorization_code&code=${code}&redirect_uri=https://idp-nextjs-test2.netlify.app/api/auth/callback/idp`,
       {
         method: "post",
         headers: {

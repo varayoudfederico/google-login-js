@@ -3,6 +3,7 @@ export default function handler(req, res) {
     const baseURL = "https://backoffice-staging.personal-svcs.com";
     let externalId = "";
     let token = "";
+
     if (req.query.idMovil) {
       externalId = req.query.idMovil;
       token =
@@ -11,20 +12,19 @@ export default function handler(req, res) {
     } else if (req.query.idSubscriber) {
       const app = "PU";
       const crm = "OPEN";
-      const subscriptionID = "";
+      const subscriptionId = "";
       const provider = "TELECOM_AR";
       const subscriberId = req.query.idSubscriber;
 
-      const encoded = Buffer.from(
-        `{"app":"${app}", "crm":"${crm}", "subscriberId":${subscriberId}, "subscriptionId":${subscriptionId}, "provider":"${provider}"}`,
-        "binary"
-      ).toString("base64");
+      const json = `{"app":"${app}", "crm":"${crm}", "subscriberId":"${subscriberId}", "subscriptionId":"${subscriptionId}", "provider":"${provider}"}`;
+      const encoded = Buffer.from(json, "binary").toString("base64");
 
+      console.log("pre encode: ", json);
       console.log("encode: ", encoded);
-      console.log("Subscriber ID: ", idSubscriber);
-      // externalId = req.query.idMovil;
+      console.log("Subscriber ID: ", subscriberId);
+      externalId = encoded;
       token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwZXJzb25hbCIsImluc3RhbmNlIjoiNjEifQ.3kME1eJT9rvVUvGqUgSJTEzFEJvCAAZJVXqkaTEjtEs";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwb3J0YWwtdW5pZmljYWRvIiwiaW5zdGFuY2UiOiI2MSJ9.dzZIM8Bx9oK7oW1Ic4IiBLHMqKPvKCgQ0-MAWIgf2xs";
     }
 
     if (externalId) {

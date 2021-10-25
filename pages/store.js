@@ -9,6 +9,7 @@ const Store = () => {
   const [result, setResult] = useState([]);
 
   const getProductosMovil = async () => {
+    setResult("Loading...");
     try {
       const res = await fetch(`/api/store/getProducts?idMovil=${idMovil}`);
       const data = await res.json();
@@ -21,8 +22,11 @@ const Store = () => {
   };
 
   const getProductosApp = async () => {
+    setResult("Loading...");
     try {
-      const res = await fetch(`/api/store/getProducts?idSubscriber=${idSubscriber}`);
+      const res = await fetch(
+        `/api/store/getProducts?idSubscriber=${idSubscriber}`
+      );
       const data = await res.json();
       console.log(data);
       setResult(data);

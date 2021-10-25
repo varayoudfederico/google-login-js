@@ -76,6 +76,7 @@ export default function handler(req, res) {
         res.redirect(`/success`);
       });
   } catch (error) {
+    console.log(error)
     res.status(500).json(error);
   }
 }

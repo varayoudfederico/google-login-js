@@ -59,7 +59,7 @@ const useIDP = () => {
     setUser(null);
     if (idToken) {
       const redirect_uri = encodeURI(
-        "https://idp-nextjs-test.netlify2.app/api/auth/signout"
+        "https://idp-nextjs-test2.netlify2.app/api/auth/signout"
       );
       const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${idToken}&post_logout_redirect_uri=${redirect_uri}`;
       router.push(url);

@@ -64,6 +64,7 @@ export default NextAuth({
       clientId: process.env.NEXT_PUBLIC_IDP_CLIENT_ID,
       clientSecret: process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET,
       profile(OAuthProfile) {
+        console.log(OAuthProfile);
         return {
           ...OAuthProfile,
         };

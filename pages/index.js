@@ -1,4 +1,5 @@
 import Head from "next/head";
+import router from "next/router";
 import useIDP from "../hooks/useIDP";
 
 const Home = () => {
@@ -27,6 +28,10 @@ const Home = () => {
             </button>
           </>
         )}
+
+        <button className="btn-blue" onClick={() => router.push("/store")}>
+          Ir a Store test
+        </button>
       </main>
     </>
   );

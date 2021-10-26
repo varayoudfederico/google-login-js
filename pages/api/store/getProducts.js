@@ -6,9 +6,9 @@ export default function handler(req, res) {
 
     if (req.query.idMovil) {
       externalId = req.query.idMovil;
-      token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwZXJzb25hbCIsImluc3RhbmNlIjoiNjEifQ.3kME1eJT9rvVUvGqUgSJTEzFEJvCAAZJVXqkaTEjtEs";
-      console.log("Movil ID: ", externalId);
+      token = process.env.NEXT_PUBLIC_TOKEN_CONSULTA_MOVIL;
+      // token = "test"
+      // console.log("Movil ID: ", externalId);
     } else if (req.query.idSubscriber) {
       const app = "PU";
       const crm = "OPEN";
@@ -19,12 +19,18 @@ export default function handler(req, res) {
       const json = `{"app":"${app}", "crm":"${crm}", "subscriberId":"${subscriberId}", "subscriptionId":"${subscriptionId}", "provider":"${provider}"}`;
       const encoded = Buffer.from(json, "binary").toString("base64");
 
-      console.log("pre encode: ", json);
-      console.log("encode: ", encoded);
-      console.log("Subscriber ID: ", subscriberId);
+      // console.log("pre encode: ", json);
+      // console.log("encode: ", encoded);
+      // console.log("Subscriber ID: ", subscriberId);
       externalId = encoded;
-      token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwb3J0YWwtdW5pZmljYWRvIiwiaW5zdGFuY2UiOiI2MSJ9.dzZIM8Bx9oK7oW1Ic4IiBLHMqKPvKCgQ0-MAWIgf2xs";
+      token = process.env.NEXT_PUBLIC_TOKEN_CONSULTA_APP;
+    } else {
+      const resp = {
+        status: "error",
+        message: "Falta identificador de usuario",
+        result: null,
+      };
+      res.status(401).json(resp);
     }
 
     if (externalId) {
@@ -40,13 +46,44 @@ export default function handler(req, res) {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-
-          res.status(200).json(data);
+          if (data.result?.length > 0) {
+            const resp = {
+              status: "success",
+              message: "Se encontraron los siguientes productos",
+              result: data.result,
+            };
+            res.status(200).json(resp);
+          } else if (data.errorCode === "PRODUCT_NOT_FOUND") {
+            const resp = {
+              status: "success",
+              message: "El usuario no tiene productos asignados",
+              result: [],
+            };
+            res.status(401).json(resp);
+          } else if (data.errorCode === "CUSTOMER_NOT_FOUND") {
+            const resp = {
+              status: "error",
+              message: "No se encontro usuario",
+              result: null,
+            };
+            res.status(401).json(resp);
+          } else {
+            const resp = {
+              status: "error",
+              message: `Error no identificado (${data.errorCode})`,
+              result: null,
+            };
+            res.status(500).json(resp);
+          }
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    const resp = {
+      status: "error",
+      message: `Error no identificado (${error})`,
+      result: null,
+    };
+    res.status(500).json(resp);
   }
 }

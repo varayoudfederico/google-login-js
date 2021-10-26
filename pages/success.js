@@ -18,9 +18,15 @@ const Success = () => {
         {user ? (
           <>
             <h1 className="text-2xl font-bold pb-4">Login con exito!</h1>
-            <p>
-              <span className="font-bold">Sub:</span> {user?.sub}
-            </p>
+            {user ? (
+              <div key={idx} className="p-4 bg-gray-100 m-4 rounded-xl">
+                {Object.entries(user).map(([key, value]) => (
+                  <p key={key}>
+                    <span className="font-bold">{key}</span>: {value}
+                  </p>
+                ))}
+              </div>
+            ) : null}
             <button className="btn-blue mt-16 w-32" onClick={() => logout()}>
               Logout
             </button>

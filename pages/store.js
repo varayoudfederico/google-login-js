@@ -1,39 +1,46 @@
 import Head from "next/head";
-import { useState } from "react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 // import useIDP from "../hooks/useIDP";
 
 const Store = () => {
   //   const { login, logout, user } = useIDP();
-  const [idMovil, setIdMovil] = useState(null);
-  const [idSubscriber, setIdSubscriber] = useState(null);
-  const [result, setResult] = useState([]);
+  const [id, setId] = useState(null);
+  // const [idSubscriber, setIdSubscriber] = useState(null);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const getProductosMovil = async () => {
-    setResult("Loading...");
+  useEffect(() => {
+    console.log("Result: ", result);
+  }, [result]);
+
+  const getProductos = async (type) => {
+    setResult(null);
+    setLoading(true);
     try {
-      const res = await fetch(`/api/store/getProducts?idMovil=${idMovil}`);
+      let url = "";
+      if (type === "MOVIL") {
+        url = `/api/store/getProducts?idMovil=${id}`;
+      } else {
+        url = `/api/store/getProducts?idSubscriber=${id}`;
+      }
+      const res = await fetch(url);
       const data = await res.json();
       console.log(data);
-      setResult(data);
+      if (data.status === "success") {
+        setError(null);
+        setResult(data.result);
+      } else {
+        setResult(null);
+        setError(data.message);
+      }
+      // setResult(data.result);
     } catch (error) {
       console.error(error);
-      setResult(error);
+      // setResult(error);
     }
-  };
-
-  const getProductosApp = async () => {
-    setResult("Loading...");
-    try {
-      const res = await fetch(
-        `/api/store/getProducts?idSubscriber=${idSubscriber}`
-      );
-      const data = await res.json();
-      console.log(data);
-      setResult(data);
-    } catch (error) {
-      console.error(error);
-      setResult(error);
-    }
+    setLoading(false);
   };
 
   return (
@@ -42,34 +49,56 @@ const Store = () => {
         <title>STORE test</title>
       </Head>
       <main className="p-12">
-        <h1 className="text-2xl font-bold pb-4">STORE Test</h1>
+        <Link href="/">
+          <a>
+            <h1 className="text-2xl font-bold pb-4">STORE Test</h1>
+          </a>
+        </Link>
 
+        <input
+          type="text"
+          placeholder="ID"
+          className="border-2 border-gray-400 rounded-xl p-2"
+          onChange={(e) => setId(e.target.value)}
+        />
         <div>
-          <input
-            type="text"
-            placeholder="543777220160"
-            className="border-2 border-gray-400 rounded-xl p-2"
-            onChange={(e) => setIdMovil(e.target.value)}
-          />
-          <button className="btn-blue" onClick={() => getProductosMovil()}>
+          <button className="btn-blue" onClick={() => getProductos("MOVIL")}>
             Consulta Productos (Movil)
           </button>
           <span>Ejemplo: 543777220160</span>
         </div>
         <div>
-          <input
-            type="text"
-            placeholder="subscriberId"
-            className="border-2 border-gray-400 rounded-xl p-2"
-            onChange={(e) => setIdSubscriber(e.target.value)}
-          />
-          <button className="btn-blue" onClick={() => getProductosApp()}>
+          <button className="btn-blue" onClick={() => getProductos("APP")}>
             Consulta Productos (App)
           </button>
           <span>Ejemplo: 25693</span>
         </div>
-
-        <p className="pt-4">{JSON.stringify(result, null, 2)}</p>
+        {loading ? (
+          <p className="text-lg p-4 m-4">Loading...</p>
+        ) : (
+          <>
+            {error ? <p className="text-lg p-4 m-4">{error}</p> : null}
+            {result ? (
+              <>
+                {result.length > 0 ? (
+                  result.map((item, idx) => (
+                    <div key={idx} className="p-4 bg-gray-100 m-4 rounded-xl">
+                      {Object.entries(item).map(([key, value]) => (
+                        <p key={key}>
+                          <span className="font-bold">{key}</span>: {value}
+                        </p>
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-lg p-4 m-4">
+                    El usuario no tiene productos asignados
+                  </p>
+                )}
+              </>
+            ) : null}
+          </>
+        )}
       </main>
     </>
   );

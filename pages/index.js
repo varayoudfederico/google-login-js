@@ -19,6 +19,12 @@ const Home = () => {
             <button className="btn-blue" onClick={() => logout()}>
               Logout
             </button>
+            <button
+              className="btn-blue"
+              onClick={() => router.push("/success")}
+            >
+              Ir a detalles del usuario
+            </button>
           </>
         ) : (
           <>

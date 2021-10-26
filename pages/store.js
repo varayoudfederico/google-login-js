@@ -17,24 +17,21 @@ const Store = () => {
 
   const getProductos = async (type) => {
     setResult(null);
+    setError(null);
     setLoading(true);
     try {
-      let url = "";
-      if (type === "MOVIL") {
-        url = `/api/store/getProducts?idMovil=${id}`;
-      } else {
-        url = `/api/store/getProducts?idSubscriber=${id}`;
-      }
+      let url =
+        type === "MOVIL"
+          ? `/api/store/getProducts?idMovil=${id}`
+          : `/api/store/getProducts?idSubscriber=${id}`;
+
       const res = await fetch(url);
       const data = await res.json();
       console.log(data);
-      if (data.status === "success") {
-        setError(null);
-        setResult(data.result);
-      } else {
-        setResult(null);
-        setError(data.message);
-      }
+      data.status === "success"
+        ? setResult(data.result)
+        : setError(data.message);
+
       // setResult(data.result);
     } catch (error) {
       console.error(error);

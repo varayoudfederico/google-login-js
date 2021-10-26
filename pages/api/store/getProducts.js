@@ -1,12 +1,14 @@
 export default function handler(req, res) {
   try {
     const baseURL = "https://backoffice-staging.personal-svcs.com";
-    let externalId = "";
-    let token = "";
+    let externalId = null;
+    let token = req.query.idMovil
+      ? process.env.NEXT_PUBLIC_TOKEN_CONSULTA_MOVIL
+      : process.env.NEXT_PUBLIC_TOKEN_CONSULTA_APP;
 
     if (req.query.idMovil) {
       externalId = req.query.idMovil;
-      token = process.env.NEXT_PUBLIC_TOKEN_CONSULTA_MOVIL;
+
       // token = "test"
       // console.log("Movil ID: ", externalId);
     } else if (req.query.idSubscriber) {
@@ -23,7 +25,6 @@ export default function handler(req, res) {
       // console.log("encode: ", encoded);
       // console.log("Subscriber ID: ", subscriberId);
       externalId = encoded;
-      token = process.env.NEXT_PUBLIC_TOKEN_CONSULTA_APP;
     } else {
       const resp = {
         status: "error",

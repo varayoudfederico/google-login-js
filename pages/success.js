@@ -19,7 +19,7 @@ const Success = () => {
           <>
             <h1 className="text-2xl font-bold pb-4">Login con exito!</h1>
             {user ? (
-              <div key={idx} className="p-4 bg-gray-100 m-4 rounded-xl">
+              <div className="p-4 bg-gray-100 m-4 rounded-xl">
                 {Object.entries(user).map(([key, value]) => (
                   <p key={key}>
                     <span className="font-bold">{key}</span>: {value}

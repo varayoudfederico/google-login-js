@@ -3,9 +3,12 @@ import GoogleProvider from "next-auth/providers/google";
 
 export default NextAuth({
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, other, other2, other3 }) {
       console.log("in jwt token: ", token);
       console.log("in jwt account: ", account);
+      console.log("in jwt 1: ", other);
+      console.log("in jwt 2: ", other2);
+      console.log("in jwt 3: ", other3);
       // Persist the OAuth access_token to the token right after signin
       if (account) {
         token.accessToken = account.access_token;

@@ -6,7 +6,7 @@ export default NextAuth({
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
-        profile.relatedData = account.relatedData;
+        token.relatedData = profile.relatedData;
       }
       return token;
     },

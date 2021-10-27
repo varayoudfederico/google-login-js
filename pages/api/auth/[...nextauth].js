@@ -8,9 +8,9 @@ export default NextAuth({
       console.log("in jwt account: ", account);
       // Persist the OAuth access_token to the token right after signin
       if (account) {
-        token.accessToken = account.access_token
+        token.accessToken = account.access_token;
       }
-      return token
+      return token;
     },
     async session({ session, token, user }) {
       console.log("in session session: ", session);
@@ -39,11 +39,12 @@ export default NextAuth({
       profile(profile, tokens) {
         console.log("profile: ", profile);
         console.log("tokens: ", tokens);
+        
         return {
           id: profile.sub,
           name: profile.sub,
           externalId: profile.sub,
-          ...profile
+          user: profile
         };
       },
     },

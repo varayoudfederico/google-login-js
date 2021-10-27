@@ -3,15 +3,10 @@ import GoogleProvider from "next-auth/providers/google";
 
 export default NextAuth({
   callbacks: {
-    async jwt( token, account, other, other2, other3 ) {
-      console.log("in jwt token: ", token);
-      console.log("in jwt account: ", account);
-      console.log("in jwt 1: ", other);
-      console.log("in jwt 2: ", other2);
-      console.log("in jwt 3: ", other3);
+    async jwt({ token, account, profile }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
-        token.accessToken = account.access_token;
+        profile.relatedData = account.relatedData;
       }
       return token;
     },
@@ -20,7 +15,7 @@ export default NextAuth({
       console.log("in session token : ", token);
       console.log("in session user: ", user);
       // Send properties to the client, like an access_token from a provider.
-      session.user.externalId = token.accessToken;
+      session.user.relatedData = token.relatedData;
       return session;
     },
   },
@@ -42,7 +37,7 @@ export default NextAuth({
       profile(profile, tokens) {
         console.log("profile: ", profile);
         console.log("tokens: ", tokens);
-        profile.test = "test string"
+        profile.test = "test string";
 
         return {
           id: profile.sub,

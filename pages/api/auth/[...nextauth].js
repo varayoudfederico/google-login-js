@@ -8,11 +8,11 @@ export default NextAuth({
       console.log("in jwt account : ", account);
       console.log("in jwt profile: ", profile);
       // Persist the OAuth access_token to the token right after signin
-      if (profile.relatedData) {
+      if (profile && profile.relatedData) {
         token.relatedData = profile.relatedData;
       }
 
-      if (profile.sub) {
+      if (profile && profile.sub) {
         token.sub = profile.sub;
       }
 
@@ -51,9 +51,6 @@ export default NextAuth({
         return {
           id: profile.sub,
           name: profile.sub,
-          externalId: profile.sub,
-          user: profile,
-          email: profile.sub,
         };
       },
     },

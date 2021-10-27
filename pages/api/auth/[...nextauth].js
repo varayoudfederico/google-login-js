@@ -45,7 +45,7 @@ export default NextAuth({
           name: profile.sub,
           externalId: profile.sub,
           user: profile,
-          test: "test",
+          address: "test",
         };
       },
     },

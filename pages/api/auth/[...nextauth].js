@@ -17,7 +17,7 @@ export default NextAuth({
       console.log("in session token : ", token);
       console.log("in session user: ", user);
       // Send properties to the client, like an access_token from a provider.
-      session.user.externalId = "external test";
+      session.user.externalId = token.accessToken;
       return session;
     },
   },
@@ -39,12 +39,12 @@ export default NextAuth({
       profile(profile, tokens) {
         console.log("profile: ", profile);
         console.log("tokens: ", tokens);
-        
+
         return {
           id: profile.sub,
           name: profile.sub,
           externalId: profile.sub,
-          user: profile
+          user: profile,
         };
       },
     },

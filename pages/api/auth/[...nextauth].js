@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 export default NextAuth({
   callbacks: {
-    async jwt({ token, account, other, other2, other3 }) {
+    async jwt( token, account, other, other2, other3 ) {
       console.log("in jwt token: ", token);
       console.log("in jwt account: ", account);
       console.log("in jwt 1: ", other);

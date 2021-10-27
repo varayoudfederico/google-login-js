@@ -39,6 +39,7 @@ export default NextAuth({
       profile(profile, tokens) {
         console.log("profile: ", profile);
         console.log("tokens: ", tokens);
+        profile.test = "test string"
 
         return {
           id: profile.sub,

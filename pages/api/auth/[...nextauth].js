@@ -2,6 +2,14 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 export default NextAuth({
+  callbacks: {
+    async session({ session, token, user }) {
+      console.log(token);
+      // Send properties to the client, like an access_token from a provider.
+      session.externalId = "external test";
+      return session;
+    },
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,

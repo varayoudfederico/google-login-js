@@ -10,11 +10,16 @@ export default NextAuth({
       // Persist the OAuth access_token to the token right after signin
       if (profile && profile.relatedData) {
         token.relatedData = profile.relatedData;
+        token.subscriberId = profile.relatedData;
       }
 
       if (profile && profile.sub) {
         token.sub = profile.sub;
       }
+
+      if (profile && profile.sub.includes("@")) {
+        token.type = "OPEN";
+      } else token.type = "Movil";
 
       return token;
     },
@@ -46,7 +51,6 @@ export default NextAuth({
       profile(profile, tokens) {
         console.log("profile: ", profile);
         console.log("tokens: ", tokens);
-        profile.test = "test string";
 
         return {
           id: profile.sub,

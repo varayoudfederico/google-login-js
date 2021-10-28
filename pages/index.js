@@ -36,7 +36,7 @@ const Home = () => {
           <>
             <p className="font-bold text-xl my-4">Logueado!</p>
             <p>Name: {session.user?.name}</p>
-            <p>External ID: {session.user?.externalId}</p>
+            {/* <p>SUB: {session.user?.sub}</p> */}
             <button className="btn-blue" onClick={() => signOut()}>
               Logout
             </button>

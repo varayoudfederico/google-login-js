@@ -16,14 +16,9 @@ const Home = () => {
 
   const logout = async () => {
     console.log("Logout...");
-    // const token = await getToken({ req, secret, encryption: false, raw: true });
-    // // deleteCookies();
-    // // setUser(null);
-    // if (token) {
-    //   console.log("token: ", token);
-    // }
-    // const response = await fetch("api/logout");
-    // console.log("res", response);
+    
+    const response = await fetch("api/logout");
+    console.log("res", response);
     signOut();
   };
 

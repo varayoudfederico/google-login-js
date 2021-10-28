@@ -1,5 +1,4 @@
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
 
 export default NextAuth({
   callbacks: {
@@ -8,9 +7,6 @@ export default NextAuth({
       console.log("in jwt account : ", account);
       console.log("in jwt profile: ", profile);
 
-      // if (profile && profile.relatedData) {
-      //   token.relatedData = profile.relatedData;
-      // }
       if (profile && profile.relatedData?.SUBSCRIBERID) {
         token.subscriberId = profile.relatedData.SUBSCRIBERID[0];
       }
@@ -31,8 +27,7 @@ export default NextAuth({
       console.log("in session session: ", session);
       console.log("in session token : ", token);
       console.log("in session user: ", user);
-      // Send properties to the client, like an access_token from a provider.
-      // session.user.relatedData = token.relatedData;
+
       session.user.sub = token.sub;
       session.user.type = token.type;
       if (token.subscriberId) {
@@ -42,10 +37,6 @@ export default NextAuth({
     },
   },
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
     {
       id: "idp",
       name: "IDP",

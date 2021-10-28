@@ -10,6 +10,10 @@ const Home = () => {
     console.log("Session: ", session);
   }, [session]);
 
+  const getProducts = () => {
+    console.log("Fetching productos...");
+  };
+
   return (
     <>
       <Head>
@@ -25,11 +29,8 @@ const Home = () => {
         ) : !session ? (
           <>
             <p>No hay usuario logueado</p>
-            <button className="btn-blue" onClick={() => signIn(["google"])}>
-              Login con Google
-            </button>
             <button className="btn-blue" onClick={() => signIn(["idp"])}>
-              Login con IDP
+              Ingresar
             </button>
           </>
         ) : (
@@ -39,10 +40,13 @@ const Home = () => {
             <p>SUB: {session.user?.sub}</p>
             <p>Type: {session.user?.type}</p>
             {session.user?.subscriberId ? (
-              <p>{session.user?.subscriberId}</p>
+              <p>SubscriberID: {session.user?.subscriberId}</p>
             ) : null}
             <button className="btn-blue" onClick={() => signOut()}>
-              Logout
+              Cerrar sesión
+            </button>
+            <button className="btn-blue" onClick={() => getProducts()}>
+              Consulta productos
             </button>
           </>
         )}

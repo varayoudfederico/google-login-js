@@ -24,7 +24,7 @@ const Home = () => {
     // }
     const response = await fetch("api/logout");
     console.log("res", response);
-    signOut();
+    // signOut();
   };
 
   return (

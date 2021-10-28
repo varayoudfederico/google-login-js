@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-
+import { getToken } from "next-auth/jwt";
 const Home = () => {
   const { data: session, status } = useSession();
   const loading = status === "loading";
@@ -12,6 +12,17 @@ const Home = () => {
 
   const getProducts = () => {
     console.log("Fetching productos...");
+  };
+
+  const logout = async () => {
+    console.log("Logout...");
+    const token = await getToken({ req, secret, encryption: false, raw: true });
+    // deleteCookies();
+    // setUser(null);
+    if (token) {
+      console.log("token: ", token);
+    }
+    signOut();
   };
 
   return (
@@ -42,7 +53,7 @@ const Home = () => {
             {session.user?.subscriberId ? (
               <p>SubscriberID: {session.user?.subscriberId}</p>
             ) : null}
-            <button className="btn-blue" onClick={() => signOut()}>
+            <button className="btn-blue" onClick={() => logout()}>
               Cerrar sesión
             </button>
             <button className="btn-blue" onClick={() => getProducts()}>

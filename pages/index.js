@@ -1,58 +1,20 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import useStore from "../hooks/useStore";
 
 const Home = () => {
   const { data: session, status } = useSession();
+  const { result, error, fetching, fetchProducts } = useStore();
   const loading = status === "loading";
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
-  const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
     console.log("Session: ", session);
   }, [session]);
 
-  const getProducts = async () => {
-    setResult(null);
-    setError(null);
-    setFetching(true);
-    const demoSubscriberID = "25693";
-    try {
-      const url =
-        session.user?.type === "Movil"
-          ? `/api/store/getProducts?idMovil=54${session.user?.sub}`
-          : session.user?.type === "OPEN"
-          ? `/api/store/getProducts?idSubscriber=${demoSubscriberID}`
-          : `/api/store/getProducts`;
-
-      const res = await fetch(url);
-      const data = await res.json();
-      console.log(data);
-      data.status === "success"
-        ? setResult(data.result)
-        : setError(data.message);
-
-      // setResult(data.result);
-    } catch (error) {
-      console.error(error);
-      // setResult(error);
-    }
-    setFetching(false);
-  };
-
   const logout = async () => {
-    console.log("Logout...");
     const token = session.user?.id_token;
-    if (token) {
-      console.log("toke:", token);
-      // const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${token}&post_logout_redirect_uri=https://idp-nextjs-test2.netlify.app/api/auth/signout`;
-      const response = await fetch(`api/logout?token=${token}`);
-      const data = await response.json();
-      console.log("res", data);
-      console.log("res", response);
-    }
-
+    if (token) await fetch(`api/logout?token=${token}`);
     signOut();
   };
 
@@ -87,7 +49,7 @@ const Home = () => {
             <button className="btn-blue" onClick={() => logout()}>
               Cerrar sesión
             </button>
-            <button className="btn-blue mb-8" onClick={() => getProducts()}>
+            <button className="btn-blue mb-8" onClick={() => setId()}>
               Consulta productos
             </button>
             {fetching ? <p>Obteniendo datos...</p> : null}

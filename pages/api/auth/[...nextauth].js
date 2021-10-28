@@ -35,6 +35,10 @@ export default NextAuth({
       }
       return session;
     },
+    redirect({ url, baseUrl }) {
+      console.log("redirect url", url);
+      console.log("redirect baseUrl", baseUrl);
+    },
   },
   providers: [
     {

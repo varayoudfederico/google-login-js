@@ -3,10 +3,9 @@ import NextAuth from "next-auth";
 export default NextAuth({
   callbacks: {
     async jwt({ token, account, profile }) {
-      console.log("in jwt token: ", token);
-      console.log("in jwt account : ", account);
-      console.log("in jwt profile: ", profile);
-
+      // console.log("in jwt token: ", token);
+      // console.log("in jwt account : ", account);
+      // console.log("in jwt profile: ", profile);
       if (account && account.id_token) {
         token.id_token = account.id_token;
       }
@@ -28,10 +27,9 @@ export default NextAuth({
       return token;
     },
     async session({ session, token, user }) {
-      console.log("in session session: ", session);
-      console.log("in session token : ", token);
-      console.log("in session user: ", user);
-
+      // console.log("in session session: ", session);
+      // console.log("in session token : ", token);
+      // console.log("in session user: ", user);
       session.user.sub = token.sub;
       session.user.type = token.type;
       if (token.subscriberId) {
@@ -41,10 +39,6 @@ export default NextAuth({
         session.user.id_token = token.id_token;
       }
       return session;
-    },
-    redirect({ url, baseUrl }) {
-      console.log("redirect url", url);
-      console.log("redirect baseUrl", baseUrl);
     },
   },
   providers: [

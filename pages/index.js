@@ -1,11 +1,11 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import useStore from "../hooks/useStore";
 
 const Home = () => {
   const { data: session, status } = useSession();
-  const { result, error, fetching, fetchProducts } = useStore();
+  const { fetchProducts, result, error, fetching } = useStore();
   const loading = status === "loading";
 
   useEffect(() => {
@@ -27,7 +27,6 @@ const Home = () => {
 
       <main className="p-12">
         <h1 className="text-2xl font-bold pb-4">Login with next-auth</h1>
-
         {loading ? (
           <p>Cargando...</p>
         ) : !session ? (
@@ -57,23 +56,21 @@ const Home = () => {
               <p className="text-lg p-4 m-4 text-red-500">{error}</p>
             ) : null}
             {result ? (
-              <>
-                {result.length > 0 ? (
-                  result.map((item, idx) => (
-                    <div key={idx} className="p-4 bg-gray-100 m-4 rounded-xl">
-                      {Object.entries(item).map(([key, value]) => (
-                        <p key={key}>
-                          <span className="font-bold">{key}</span>: {value}
-                        </p>
-                      ))}
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-lg p-4 m-4">
-                    El usuario no tiene productos asignados
-                  </p>
-                )}
-              </>
+              result.length > 0 ? (
+                result.map((item, idx) => (
+                  <div key={idx} className="p-4 bg-gray-100 m-4 rounded-xl">
+                    {Object.entries(item).map(([key, value]) => (
+                      <p key={key}>
+                        <span className="font-bold">{key}</span>: {value}
+                      </p>
+                    ))}
+                  </div>
+                ))
+              ) : (
+                <p className="text-lg p-4 m-4">
+                  El usuario no tiene productos asignados
+                </p>
+              )
             ) : null}
           </>
         )}

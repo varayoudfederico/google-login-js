@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useState } from "react";
+import {  useSession } from "next-auth/react";
 
 // const session = {
 //   user: {
@@ -38,11 +38,8 @@ const useStore = () => {
       data.status === "success"
         ? setResult(data.result)
         : setError(data.message);
-
-      // setResult(data.result);
     } catch (error) {
       console.error(error);
-      // setResult(error);
     }
     setFetching(false);
   };

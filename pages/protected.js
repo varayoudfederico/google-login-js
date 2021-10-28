@@ -10,9 +10,9 @@ const Protected = () => {
   });
 
   return session ? (
-    <p>Protected page only for logged users</p>
+    <p>Mi cuenta</p>
   ) : (
-    <p>You can't see this because you're not logged in</p>
+    <p>Debe iniciar sesión para ver esta pagina</p>
   );
 };
 

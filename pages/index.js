@@ -36,7 +36,11 @@ const Home = () => {
           <>
             <p className="font-bold text-xl my-4">Logueado!</p>
             <p>Name: {session.user?.name}</p>
-            {/* <p>SUB: {session.user?.sub}</p> */}
+            <p>SUB: {session.user?.sub}</p>
+            <p>Type: {session.user?.type}</p>
+            {session.user?.subscriberId ? (
+              <p>{session.user?.subscriberId}</p>
+            ) : null}
             <button className="btn-blue" onClick={() => signOut()}>
               Logout
             </button>

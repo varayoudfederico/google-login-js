@@ -1,12 +1,9 @@
 import { useSession, signIn } from "next-auth/react";
 
-const Protected = () => {
+const MiCuenta = () => {
   const { data: session, status } = useSession({
     required: true,
-    onUnauthenticated() {
-      console.log("Please login first");
-      signIn("idp");
-    },
+    onUnauthenticated: () => signIn("idp"),
   });
 
   return session ? (
@@ -16,4 +13,4 @@ const Protected = () => {
   );
 };
 
-export default Protected;
+export default MiCuenta;

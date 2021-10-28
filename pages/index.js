@@ -28,12 +28,9 @@ const Home = () => {
 
       <main className="p-12">
         <h1 className="text-2xl font-bold">Login with next-auth</h1>
-        <Link href="/protected">
+        <Link href="/micuenta">
           <a>
-            {" "}
-            <button className="btn-blue" onClick={() => signIn(["google"])}>
-              Ir a mi cuenta
-            </button>
+            <button className="btn-blue">Ir a mi cuenta</button>
           </a>
         </Link>
 

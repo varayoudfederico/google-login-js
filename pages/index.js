@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { getToken } from "next-auth/jwt";
+
 const Home = () => {
   const { data: session, status } = useSession();
   const loading = status === "loading";
@@ -16,12 +16,12 @@ const Home = () => {
 
   const logout = async () => {
     console.log("Logout...");
-    const token = await getToken({ req, secret, encryption: false, raw: true });
-    // deleteCookies();
-    // setUser(null);
-    if (token) {
-      console.log("token: ", token);
-    }
+    // const token = await getToken({ req, secret, encryption: false, raw: true });
+    // // deleteCookies();
+    // // setUser(null);
+    // if (token) {
+    //   console.log("token: ", token);
+    // }
     signOut();
   };
 

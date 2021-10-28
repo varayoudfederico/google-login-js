@@ -5,13 +5,39 @@ import { signIn, signOut, useSession } from "next-auth/react";
 const Home = () => {
   const { data: session, status } = useSession();
   const loading = status === "loading";
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log("Session: ", session);
   }, [session]);
 
-  const getProducts = () => {
-    console.log("Fetching productos...");
+  const getProducts = async (type) => {
+    setResult(null);
+    setError(null);
+    setLoading(true);
+    try {
+      const url =
+        session.user?.type === "Movil"
+          ? `/api/store/getProducts?idMovil=${session.user?.sub}`
+          : session.user?.type === "OPEN"
+          ? `/api/store/getProducts?idSubscriber=${session.user?.subscriberId}`
+          : `/api/store/getProducts`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      console.log(data);
+      data.status === "success"
+        ? setResult(data.result)
+        : setError(data.message);
+
+      // setResult(data.result);
+    } catch (error) {
+      console.error(error);
+      // setResult(error);
+    }
+    setLoading(false);
   };
 
   const logout = async () => {

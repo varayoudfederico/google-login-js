@@ -8,9 +8,9 @@ export default NextAuth({
       console.log("in jwt account : ", account);
       console.log("in jwt profile: ", profile);
 
-      if (profile && profile.relatedData) {
-        token.relatedData = profile.relatedData;
-      }
+      // if (profile && profile.relatedData) {
+      //   token.relatedData = profile.relatedData;
+      // }
       if (profile && profile.relatedData?.SUBSCRIBERID[0]) {
         token.subscriberId = profile.relatedData.SUBSCRIBERID[0];
       }
@@ -30,8 +30,12 @@ export default NextAuth({
       console.log("in session token : ", token);
       console.log("in session user: ", user);
       // Send properties to the client, like an access_token from a provider.
-      session.user.relatedData = token.relatedData;
+      // session.user.relatedData = token.relatedData;
       session.user.sub = token.sub;
+      session.user.type = token.type;
+      if(token.subscriberId){
+        session.user.subscriberId = token.subscriberId
+      }
       return session;
     },
   },

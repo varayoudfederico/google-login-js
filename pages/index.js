@@ -42,16 +42,16 @@ const Home = () => {
   };
 
   const logout = async () => {
-    // console.log("Logout...");
-    // const token = session.user?.id_token;
-    // if (token) {
-    //   console.log("toke:", token);
-    //   const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${token}&post_logout_redirect_uri=https://idp-nextjs-test2.netlify.app/api/auth/signout`;
-    //   const response = await fetch(url);
-    //   const data = await response.json();
-    //   console.log("res", data);
-    //   console.log("res", response);
-    // }
+    console.log("Logout...");
+    const token = session.user?.id_token;
+    if (token) {
+      console.log("toke:", token);
+      // const url = `https://idpsesiont.telecom.com.ar/openam/oauth2/realms/convergente/connect/endSession?id_token_hint=${token}&post_logout_redirect_uri=https://idp-nextjs-test2.netlify.app/api/auth/signout`;
+      const response = await fetch(`api/logout?token=${token}`);
+      const data = await response.json();
+      console.log("res", data);
+      console.log("res", response);
+    }
 
     signOut();
   };

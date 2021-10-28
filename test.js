@@ -17,7 +17,7 @@ const demoProfile = {
   azp: "oidc-ppd-test",
   auth_time: 1635424031,
   realm: "/convergente",
-  relatedData: { SUBSCRIBERID: ["3"], FLOWID: ["1100002"] },
+  relatedData: {  },
   exp: 1635427632,
   tokenType: "JWTToken",
   iat: 1635424032,
@@ -29,7 +29,7 @@ profile = demoProfile;
 if (profile && profile.relatedData) {
   token.relatedData = profile.relatedData;
 }
-if (profile && profile.relatedData?.SUBSCRIBERID[0]) {
+if (profile && profile.relatedData?.SUBSCRIBERID) {
   token.subscriberId = profile.relatedData.SUBSCRIBERID[0];
 }
 

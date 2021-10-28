@@ -11,7 +11,7 @@ export default NextAuth({
       // if (profile && profile.relatedData) {
       //   token.relatedData = profile.relatedData;
       // }
-      if (profile && profile.relatedData?.SUBSCRIBERID[0]) {
+      if (profile && profile.relatedData?.SUBSCRIBERID) {
         token.subscriberId = profile.relatedData.SUBSCRIBERID[0];
       }
 

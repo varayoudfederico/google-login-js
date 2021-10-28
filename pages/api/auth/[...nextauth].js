@@ -7,6 +7,10 @@ export default NextAuth({
       console.log("in jwt account : ", account);
       console.log("in jwt profile: ", profile);
 
+      if (account && account.id_token) {
+        token.id_token = account.id_token;
+      }
+
       if (profile && profile.relatedData?.SUBSCRIBERID) {
         token.subscriberId = profile.relatedData.SUBSCRIBERID[0];
       }
@@ -32,6 +36,9 @@ export default NextAuth({
       session.user.type = token.type;
       if (token.subscriberId) {
         session.user.subscriberId = token.subscriberId;
+      }
+      if (token.id_token) {
+        session.user.id_token = token.id_token;
       }
       return session;
     },

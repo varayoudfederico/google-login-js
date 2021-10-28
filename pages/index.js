@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import useStore from "../hooks/useStore";
@@ -26,7 +27,16 @@ const Home = () => {
       </Head>
 
       <main className="p-12">
-        <h1 className="text-2xl font-bold pb-4">Login with next-auth</h1>
+        <h1 className="text-2xl font-bold">Login with next-auth</h1>
+        <Link href="/protected">
+          <a>
+            {" "}
+            <button className="btn-blue" onClick={() => signIn(["google"])}>
+              Ir a mi cuenta
+            </button>
+          </a>
+        </Link>
+
         {loading ? (
           <p>Cargando...</p>
         ) : !session ? (
@@ -34,6 +44,9 @@ const Home = () => {
             <p>No hay usuario logueado</p>
             <button className="btn-blue" onClick={() => signIn(["idp"])}>
               Ingresar
+            </button>
+            <button className="btn-blue" onClick={() => signIn(["google"])}>
+              Google
             </button>
           </>
         ) : (

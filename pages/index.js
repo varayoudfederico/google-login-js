@@ -49,7 +49,7 @@ const Home = () => {
             <button className="btn-blue" onClick={() => logout()}>
               Cerrar sesión
             </button>
-            <button className="btn-blue mb-8" onClick={() => setId()}>
+            <button className="btn-blue mb-8" onClick={() => fetchProducts()}>
               Consulta productos
             </button>
             {fetching ? <p>Obteniendo datos...</p> : null}

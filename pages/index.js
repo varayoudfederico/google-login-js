@@ -22,6 +22,8 @@ const Home = () => {
     // if (token) {
     //   console.log("token: ", token);
     // }
+    const response = await fetch("api/logout");
+    console.log("res", response);
     signOut();
   };
 

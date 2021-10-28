@@ -19,9 +19,11 @@ export default NextAuth({
         token.sub = profile.sub;
       }
 
-      if (profile && profile.sub.includes("@")) {
-        token.type = "OPEN";
-      } else token.type = "Movil";
+      if (profile && profile.sub) {
+        if (profile.sub.includes("@")) {
+          token.type = "OPEN";
+        } else token.type = "Movil";
+      }
 
       return token;
     },
@@ -33,8 +35,8 @@ export default NextAuth({
       // session.user.relatedData = token.relatedData;
       session.user.sub = token.sub;
       session.user.type = token.type;
-      if(token.subscriberId){
-        session.user.subscriberId = token.subscriberId
+      if (token.subscriberId) {
+        session.user.subscriberId = token.subscriberId;
       }
       return session;
     },

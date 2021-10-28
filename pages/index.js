@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Home = () => {
@@ -7,22 +7,22 @@ const Home = () => {
   const loading = status === "loading";
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log("Session: ", session);
   }, [session]);
 
-  const getProducts = async (type) => {
+  const getProducts = async () => {
     setResult(null);
     setError(null);
-    setLoading(true);
+    // setLoading(true);
+    const demoSubscriberID = "25693";
     try {
       const url =
         session.user?.type === "Movil"
           ? `/api/store/getProducts?idMovil=${session.user?.sub}`
           : session.user?.type === "OPEN"
-          ? `/api/store/getProducts?idSubscriber=${session.user?.subscriberId}`
+          ? `/api/store/getProducts?idSubscriber=${demoSubscriberID}`
           : `/api/store/getProducts`;
 
       const res = await fetch(url);
@@ -37,7 +37,7 @@ const Home = () => {
       console.error(error);
       // setResult(error);
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   const logout = async () => {
@@ -89,6 +89,28 @@ const Home = () => {
             <button className="btn-blue" onClick={() => getProducts()}>
               Consulta productos
             </button>
+            {error ? (
+              <p className="text-lg p-4 m-4 text-red-500">{error}</p>
+            ) : null}
+            {result ? (
+              <>
+                {result.length > 0 ? (
+                  result.map((item, idx) => (
+                    <div key={idx} className="p-4 bg-gray-100 m-4 rounded-xl">
+                      {Object.entries(item).map(([key, value]) => (
+                        <p key={key}>
+                          <span className="font-bold">{key}</span>: {value}
+                        </p>
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-lg p-4 m-4">
+                    El usuario no tiene productos asignados
+                  </p>
+                )}
+              </>
+            ) : null}
           </>
         )}
       </main>

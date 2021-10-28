@@ -2,11 +2,9 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import useStore from "../hooks/useStore";
 
 const Home = () => {
   const { data: session, status } = useSession();
-  const { fetchProducts, result, error, fetching } = useStore();
   const loading = status === "loading";
 
   useEffect(() => {
@@ -28,11 +26,6 @@ const Home = () => {
 
       <main className="p-12">
         <h1 className="text-2xl font-bold">Login with next-auth</h1>
-        <Link href="/micuenta">
-          <a>
-            <button className="btn-blue">Ir a mi cuenta</button>
-          </a>
-        </Link>
 
         {loading ? (
           <p>Cargando...</p>
@@ -58,30 +51,11 @@ const Home = () => {
             <button className="btn-blue" onClick={() => logout()}>
               Cerrar sesión
             </button>
-            <button className="btn-blue mb-8" onClick={() => fetchProducts()}>
-              Consulta productos
-            </button>
-            {fetching ? <p>Obteniendo datos...</p> : null}
-            {error ? (
-              <p className="text-lg p-4 m-4 text-red-500">{error}</p>
-            ) : null}
-            {result ? (
-              result.length > 0 ? (
-                result.map((item, idx) => (
-                  <div key={idx} className="p-4 bg-gray-100 m-4 rounded-xl">
-                    {Object.entries(item).map(([key, value]) => (
-                      <p key={key}>
-                        <span className="font-bold">{key}</span>: {value}
-                      </p>
-                    ))}
-                  </div>
-                ))
-              ) : (
-                <p className="text-lg p-4 m-4">
-                  El usuario no tiene productos asignados
-                </p>
-              )
-            ) : null}
+            <Link href="/micuenta">
+              <a>
+                <button className="btn-blue">Ir a mi cuenta</button>
+              </a>
+            </Link>
           </>
         )}
       </main>

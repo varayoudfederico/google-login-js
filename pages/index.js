@@ -7,6 +7,7 @@ const Home = () => {
   const loading = status === "loading";
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
     console.log("Session: ", session);
@@ -15,12 +16,12 @@ const Home = () => {
   const getProducts = async () => {
     setResult(null);
     setError(null);
-    // setLoading(true);
+    setFetching(true);
     const demoSubscriberID = "25693";
     try {
       const url =
         session.user?.type === "Movil"
-          ? `/api/store/getProducts?idMovil=${session.user?.sub}`
+          ? `/api/store/getProducts?idMovil=54${session.user?.sub}`
           : session.user?.type === "OPEN"
           ? `/api/store/getProducts?idSubscriber=${demoSubscriberID}`
           : `/api/store/getProducts`;
@@ -37,7 +38,7 @@ const Home = () => {
       console.error(error);
       // setResult(error);
     }
-    // setLoading(false);
+    setFetching(false);
   };
 
   const logout = async () => {
@@ -86,9 +87,10 @@ const Home = () => {
             <button className="btn-blue" onClick={() => logout()}>
               Cerrar sesión
             </button>
-            <button className="btn-blue" onClick={() => getProducts()}>
+            <button className="btn-blue mb-8" onClick={() => getProducts()}>
               Consulta productos
             </button>
+            {fetching ? <p>Obteniendo datos...</p> : null}
             {error ? (
               <p className="text-lg p-4 m-4 text-red-500">{error}</p>
             ) : null}

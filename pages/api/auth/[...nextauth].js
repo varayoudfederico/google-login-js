@@ -7,10 +7,12 @@ export default NextAuth({
       console.log("in jwt token: ", token);
       console.log("in jwt account : ", account);
       console.log("in jwt profile: ", profile);
-      // Persist the OAuth access_token to the token right after signin
+
       if (profile && profile.relatedData) {
         token.relatedData = profile.relatedData;
-        token.subscriberId = profile.relatedData;
+      }
+      if (profile && profile.relatedData?.SUBSCRIBERID[0]) {
+        token.subscriberId = profile.relatedData.SUBSCRIBERID[0];
       }
 
       if (profile && profile.sub) {

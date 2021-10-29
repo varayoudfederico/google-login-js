@@ -56,6 +56,11 @@ const Home = () => {
                 <button className="btn-blue">Ir a mi cuenta</button>
               </a>
             </Link>
+            <Link href="/mcafee">
+              <a>
+                <button className="btn-blue">Ver McAfee</button>
+              </a>
+            </Link>
           </>
         )}
       </main>

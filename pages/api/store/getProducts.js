@@ -1,22 +1,38 @@
+import { TYPE_OPEN, TYPE_MOVIL } from "../../../utils/constants";
+
 export default function handler(req, res) {
   try {
     const baseURL = "https://backoffice-staging.personal-svcs.com";
     let externalId = null;
-    let token = req.query.idMovil
-      ? process.env.NEXT_PUBLIC_TOKEN_CONSULTA_MOVIL
-      : process.env.NEXT_PUBLIC_TOKEN_CONSULTA_APP;
+    let type = req.query.type;
+    let id = req.query.id;
+    console.log("type: ", type);
+    console.log("id: ", id);
+    let token =
+      type === TYPE_MOVIL
+        ? process.env.NEXT_PUBLIC_TOKEN_CONSULTA_MOVIL
+        : process.env.NEXT_PUBLIC_TOKEN_CONSULTA_APP;
 
-    if (req.query.idMovil) {
-      externalId = req.query.idMovil;
+    if (!id) {
+      const resp = {
+        status: "error",
+        message: "Falta identificador de usuario",
+        result: null,
+      };
+      res.status(401).json(resp);
+    }
+
+    if (type === TYPE_MOVIL) {
+      externalId = id;
 
       // token = "test"
       // console.log("Movil ID: ", externalId);
-    } else if (req.query.idSubscriber) {
+    } else if (type === TYPE_OPEN) {
       const app = "PU";
       const crm = "OPEN";
       const subscriptionId = "";
       const provider = "TELECOM_AR";
-      const subscriberId = req.query.idSubscriber;
+      const subscriberId = req.query.id;
 
       const json = `{"app":"${app}", "crm":"${crm}", "subscriberId":"${subscriberId}", "subscriptionId":"${subscriptionId}", "provider":"${provider}"}`;
       const encoded = Buffer.from(json, "binary").toString("base64");
@@ -28,7 +44,7 @@ export default function handler(req, res) {
     } else {
       const resp = {
         status: "error",
-        message: "Falta identificador de usuario",
+        message: "No existe ese tipo de usuario",
         result: null,
       };
       res.status(401).json(resp);
@@ -52,6 +68,7 @@ export default function handler(req, res) {
               status: "success",
               message: "Se encontraron los siguientes productos",
               result: data.result,
+              raw: data,
             };
             res.status(200).json(resp);
           } else if (data.errorCode === "PRODUCT_NOT_FOUND") {
@@ -59,6 +76,7 @@ export default function handler(req, res) {
               status: "success",
               message: "El usuario no tiene productos asignados",
               result: [],
+              raw: data,
             };
             res.status(401).json(resp);
           } else if (data.errorCode === "CUSTOMER_NOT_FOUND") {
@@ -66,6 +84,7 @@ export default function handler(req, res) {
               status: "error",
               message: "No se encontro usuario",
               result: null,
+              raw: data,
             };
             res.status(401).json(resp);
           } else {
@@ -73,6 +92,7 @@ export default function handler(req, res) {
               status: "error",
               message: `Error no identificado (${data.errorCode})`,
               result: null,
+              raw: data,
             };
             res.status(500).json(resp);
           }
@@ -84,6 +104,7 @@ export default function handler(req, res) {
       status: "error",
       message: `Error no identificado (${error})`,
       result: null,
+      raw: data,
     };
     res.status(500).json(resp);
   }

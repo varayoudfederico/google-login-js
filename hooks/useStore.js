@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 // const session = {
 //   user: {
@@ -27,9 +27,9 @@ const useStore = () => {
     try {
       const url =
         session.user?.type === "Movil"
-          ? `/api/store/getProducts?idMovil=54${session.user?.sub}`
+          ? `/api/store/getProducts?id=54${session.user?.sub}&type=MOVIL`
           : session.user?.type === "OPEN"
-          ? `/api/store/getProducts?idSubscriber=${demoSubscriberID}`
+          ? `/api/store/getProducts?id=${demoSubscriberID}&type=OPEN`
           : `/api/store/getProducts`;
 
       const res = await fetch(url);
@@ -44,7 +44,9 @@ const useStore = () => {
     setFetching(false);
   };
 
-  return { result, error, fetching, fetchProducts };
+  const altaProducto = () => {};
+
+  return { result, error, fetching, fetchProducts, altaProducto };
 };
 
 export default useStore;

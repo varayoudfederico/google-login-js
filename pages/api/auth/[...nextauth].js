@@ -6,19 +6,19 @@ export default NextAuth({
       // console.log("in jwt token: ", token);
       // console.log("in jwt account : ", account);
       // console.log("in jwt profile: ", profile);
-      if (account && account.id_token) {
+      if (account?.id_token) {
         token.id_token = account.id_token;
       }
 
-      if (profile && profile.relatedData?.SUBSCRIBERID) {
+      if (profile?.relatedData?.SUBSCRIBERID) {
         token.subscriberId = profile.relatedData.SUBSCRIBERID[0];
       }
 
-      if (profile && profile.sub) {
+      if (profile?.sub) {
         token.sub = profile.sub;
       }
 
-      if (profile && profile.sub) {
+      if (profile?.sub) {
         if (profile.sub.includes("@")) {
           token.type = "OPEN";
         } else token.type = "Movil";

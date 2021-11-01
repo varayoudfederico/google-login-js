@@ -74,7 +74,7 @@ const useStore = () => {
     setFetching(false);
   };
 
-  const bajaProducto = async (productPid, mail) => {
+  const bajaProducto = async (productPid) => {
     setResult(null);
     setError(null);
     setFetching(true);

@@ -165,7 +165,7 @@ export default function handler(req, res) {
       status: "error",
       message: `Error no identificado (${error})`,
       result: null,
-      raw: data,
+      raw: error,
     };
     return res.status(500).json(resp);
   }

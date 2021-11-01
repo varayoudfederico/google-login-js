@@ -38,10 +38,10 @@ const MiCuenta = () => {
               </a>
             </Link>
 
-            <button className="btn-blue mb-8" onClick={() => altaProducto()}>
+            <button className="btn-blue mb-8" onClick={() => altaProducto("test", "test")}>
               Dar alta
             </button>
-            <button className="btn-blue mb-8" onClick={() => bajaProducto()}>
+            <button className="btn-blue mb-8" onClick={() => bajaProducto("test")}>
               Dar baja
             </button>
             {fetching ? <p>Procesando...</p> : null}

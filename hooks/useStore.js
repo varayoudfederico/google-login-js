@@ -74,7 +74,35 @@ const useStore = () => {
     setFetching(false);
   };
 
-  return { result, error, fetching, fetchProducts, altaProducto };
+  const bajaProducto = async (productPid, mail) => {
+    setResult(null);
+    setError(null);
+    setFetching(true);
+    const demoSubscriberID = "25693";
+    const demoSubscriptionID = "10007043";
+    const demoProductPID = "PRO155_CORSRV208";
+
+    try {
+      const url =
+        session.user?.type === "undef"
+          ? `/api/store/baja?id=54${session.user?.sub}&type=MOVIL`
+          : session.user?.type === "OPEN"
+          ? `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&mail=${demoMail}&subscriptionId=${demoSubscriptionID}&addressId=${demoAddressID}`
+          : `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&subscriptionId=${demoSubscriptionID}`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      console.log(data);
+      data.status === "success"
+        ? setResult(data.message)
+        : setError(data.message);
+    } catch (error) {
+      console.error(error);
+    }
+    setFetching(false);
+  };
+
+  return { result, error, fetching, fetchProducts, altaProducto, bajaProducto };
 };
 
 export default useStore;

@@ -1,6 +1,6 @@
 import { TYPE_OPEN, TYPE_MOVIL } from "../../../utils/constants";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   try {
     const baseURL = "https://backoffice-staging.personal-svcs.com";
     let externalId = null;
@@ -51,7 +51,7 @@ export default function handler(req, res) {
     }
 
     if (externalId) {
-      fetch(
+      const response = await fetch(
         `${baseURL}/v1/customers/${externalId}/products?status=PURCHASED,CANCELLED,EXPIRED`,
         {
           method: "get",
@@ -60,43 +60,42 @@ export default function handler(req, res) {
             Authorization: `Bearer ${token}`,
           },
         }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.result?.length > 0) {
-            const resp = {
-              status: "success",
-              message: "Se encontraron los siguientes productos",
-              result: data.result,
-              raw: data,
-            };
-            res.status(200).json(resp);
-          } else if (data.errorCode === "PRODUCT_NOT_FOUND") {
-            const resp = {
-              status: "success",
-              message: "El usuario no tiene productos asignados",
-              result: [],
-              raw: data,
-            };
-            res.status(401).json(resp);
-          } else if (data.errorCode === "CUSTOMER_NOT_FOUND") {
-            const resp = {
-              status: "error",
-              message: "No se encontro usuario",
-              result: null,
-              raw: data,
-            };
-            res.status(401).json(resp);
-          } else {
-            const resp = {
-              status: "error",
-              message: `Error no identificado (${data.errorCode})`,
-              result: null,
-              raw: data,
-            };
-            res.status(500).json(resp);
-          }
-        });
+      );
+      console.log("Status: ", response.status)
+      const data = await response.json();
+      if (data.result?.length > 0) {
+        const resp = {
+          status: "success",
+          message: "Se encontraron los siguientes productos",
+          result: data.result,
+          raw: data,
+        };
+        res.status(200).json(resp);
+      } else if (data.errorCode === "PRODUCT_NOT_FOUND") {
+        const resp = {
+          status: "success",
+          message: "El usuario no tiene productos asignados",
+          result: [],
+          raw: data,
+        };
+        res.status(401).json(resp);
+      } else if (data.errorCode === "CUSTOMER_NOT_FOUND") {
+        const resp = {
+          status: "error",
+          message: "No se encontro usuario",
+          result: null,
+          raw: data,
+        };
+        res.status(401).json(resp);
+      } else {
+        const resp = {
+          status: "error",
+          message: `Error no identificado (${data.errorCode})`,
+          result: null,
+          raw: data,
+        };
+        res.status(500).json(resp);
+      }
     }
   } catch (error) {
     console.log(error);

@@ -8,7 +8,7 @@ import useStore from "../hooks/useStore";
 const MiCuenta = () => {
   const { data: session, status } = useSession();
   const loading = status === "loading";
-  const { altaProducto, result, error, fetching } = useStore();
+  const { altaProducto, bajaProducto, result, error, fetching } = useStore();
 
   return (
     <>
@@ -40,6 +40,9 @@ const MiCuenta = () => {
 
             <button className="btn-blue mb-8" onClick={() => altaProducto()}>
               Dar alta
+            </button>
+            <button className="btn-blue mb-8" onClick={() => bajaProducto()}>
+              Dar baja
             </button>
             {fetching ? <p>Procesando...</p> : null}
             {error ? (

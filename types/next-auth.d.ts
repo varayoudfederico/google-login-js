@@ -1,20 +1,19 @@
 import NextAuth from "next-auth";
 import { TYPE_OPEN, TYPE_MOVIL } from "../utils/constants";
 import { JWT } from "next-auth/jwt";
-
+/*
+Aca se expanden los tipos por defecto de los objetos Session, Profile y JWT de next-auth con los 
+parametros adicionales agregados en los callbacks en el archivo /api/auth/nextauth.ts para evitar
+errores de Typescript
+*/
 declare module "next-auth/jwt" {
-  /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
   interface JWT {
-    /** OpenID ID Token */
     subscriberId: string;
     id_token: string;
   }
 }
 
 declare module "next-auth" {
-  /**
-   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
   interface Session {
     user: {
       id_token: string;

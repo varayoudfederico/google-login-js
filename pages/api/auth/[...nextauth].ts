@@ -2,10 +2,15 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 export default NextAuth({
   callbacks: {
+    /*
+    Despues del login, se llama a este callback, en cual recibe los params account (con los token recibidos)
+    y profile (con los datos del usuario que vinieron en el id_token decodificados).
+    Para pasarlos al front, hay que asignar los datos que se quieran conservar de esos parametros al objeto token.
+    */
     async jwt({ token, account, profile }) {
-      console.log("in jwt token: ", token);
-      console.log("in jwt account : ", account);
-      console.log("in jwt profile: ", profile);
+      // console.log("in jwt token: ", token);
+      // console.log("in jwt account : ", account);
+      // console.log("in jwt profile: ", profile);
       if (account?.id_token) {
         token.id_token = account.id_token;
       }
@@ -26,10 +31,15 @@ export default NextAuth({
 
       return token;
     },
+    /*
+    Este callback se llama despues de la ejecucion del anterior. Aca tengo que asignar todas las variables que
+    guarde en el objeto token en el callback anterior a la sesion de usuario. Todos estos parametros podran ser accedidos
+    desde el front usando el hook useSession().
+    */
     async session({ session, token, user }) {
-      console.log("in session session: ", session);
-      console.log("in session token : ", token);
-      console.log("in session user: ", user);
+      // console.log("in session session: ", session);
+      // console.log("in session token : ", token);
+      // console.log("in session user: ", user);
       session.user.sub = token.sub;
       session.user.type = token.type;
       if (token.subscriberId) {

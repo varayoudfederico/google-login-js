@@ -27,10 +27,10 @@ const useStore = () => {
     try {
       const url =
         session.user?.type === "Movil"
-          ? `/api/store/getProducts?id=54${session.user?.sub}&type=MOVIL`
+          ? `/api/store/consulta?id=54${session.user?.sub}&type=MOVIL`
           : session.user?.type === "OPEN"
-          ? `/api/store/getProducts?id=${demoSubscriberID}&type=OPEN`
-          : `/api/store/getProducts`;
+          ? `/api/store/consulta?id=${demoSubscriberID}&type=OPEN`
+          : `/api/store/consulta`;
 
       const res = await fetch(url);
       const data = await res.json();

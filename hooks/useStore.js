@@ -45,6 +45,8 @@ const useStore = () => {
   };
 
   const altaProducto = async (productPid, mail) => {
+    setResult(null);
+    setError(null);
     setFetching(true);
     const demoSubscriberID = "25693";
     const demoSubscriptionID = "10007043";

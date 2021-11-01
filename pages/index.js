@@ -17,6 +17,37 @@ const Home = () => {
     signOut();
   };
 
+  const fetchTest = async () => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwb3J0YWwtdW5pZmljYWRvIiwiaW5zdGFuY2UiOiI2MSJ9.dzZIM8Bx9oK7oW1Ic4IiBLHMqKPvKCgQ0-MAWIgf2xs";
+    const app = "PU";
+    const crm = "OPEN";
+    const subscriptionId = "";
+    const provider = "TELECOM_AR";
+    const subscriberId = "25693";
+    const baseURL = "https://backoffice-staging.personal-svcs.com";
+    const json = `{"app":"${app}", "crm":"${crm}", "subscriberId":"${subscriberId}", "subscriptionId":"${subscriptionId}", "provider":"${provider}"}`;
+    const encoded = Buffer.from(json, "binary").toString("base64");
+
+    // console.log("pre encode: ", json);
+    // console.log("encode: ", encoded);
+    // console.log("Subscriber ID: ", subscriberId);
+    const externalId = encoded;
+
+    const data = await fetch(
+      `${baseURL}/v1/customers/${externalId}/products?status=PURCHASED,CANCELLED,EXPIRED`,
+      {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const response = await data.json();
+    console.log(response);
+  };
+
   return (
     <>
       <Head>
@@ -25,7 +56,9 @@ const Home = () => {
       </Head>
 
       <main className="p-12">
-        <h1 className="text-2xl font-bold">Login with next-auth</h1>
+        <h1 className="text-2xl font-bold" onClick={() => fetchTest()}>
+          Login with next-auth
+        </h1>
 
         {loading ? (
           <p>Cargando...</p>

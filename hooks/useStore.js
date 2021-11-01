@@ -87,7 +87,7 @@ const useStore = () => {
         session.user?.type === "undef"
           ? `/api/store/baja?id=54${session.user?.sub}&type=MOVIL`
           : session.user?.type === "OPEN"
-          ? `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&mail=${demoMail}&subscriptionId=${demoSubscriptionID}&addressId=${demoAddressID}`
+          ? `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&subscriptionId=${demoSubscriptionID}`
           : `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&subscriptionId=${demoSubscriptionID}`;
 
       const res = await fetch(url);

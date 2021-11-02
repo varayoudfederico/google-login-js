@@ -69,7 +69,11 @@ export default NextAuth({
       profile(profile, tokens) {
         console.log("profile: ", profile);
         console.log("tokens: ", tokens);
-
+        /*
+        En profile vienen los datos de usuario extraidos del token id_token decodificado, pero solo se pueden pasar
+        al front desde aca algunos parametros por defecto (id or name). El resto se tienen que pasar en los callbacks
+        definidos mas arriba en el codigo
+        */
         return {
           id: profile.sub,
           name: profile.sub,

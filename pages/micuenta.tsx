@@ -13,8 +13,6 @@ const MiCuenta = () => {
   const loading = status === "loading";
   const { fetchProducts, result, error, fetching } = useStore();
 
-  
-
   return (
     <>
       <Head>

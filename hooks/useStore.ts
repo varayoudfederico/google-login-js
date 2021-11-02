@@ -14,7 +14,7 @@ import { useSession } from "next-auth/react";
 // };
 
 const useStore = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [fetching, setFetching] = useState(false);

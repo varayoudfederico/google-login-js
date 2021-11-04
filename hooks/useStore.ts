@@ -44,21 +44,21 @@ const useStore = () => {
     setFetching(false);
   };
 
-  const altaProducto = async (productPid, mail) => {
+  const altaProducto = async (productPid: string, mail: string) => {
     setResult(null);
     setError(null);
     setFetching(true);
     const demoSubscriberID = "25693";
-    const demoMail = "dquipan@teco.com.ar";
-    const demoProductPID = "PRO155_CORSRV208";
+    // const demoMail = "dquipan@teco.com.ar";
+    // const demoProductPID = "PRO155_CORSRV208";
 
     try {
       const url =
         session.user?.type === "undef"
           ? `/api/store/alta?id=54${session.user?.sub}&type=MOVIL`
           : session.user?.type === "OPEN"
-          ? `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&mail=${demoMail}`
-          : `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&mail=${demoMail}`;
+          ? `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${productPid}&mail=${mail}`
+          : `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${productPid}&mail=${mail}`;
 
       const res = await fetch(url);
       const data = await res.json();
@@ -72,20 +72,19 @@ const useStore = () => {
     setFetching(false);
   };
 
-  const bajaProducto = async (productPid) => {
+  const bajaProducto = async (productPid: string) => {
     setResult(null);
     setError(null);
     setFetching(true);
     const demoSubscriberID = "25693";
-    const demoProductPID = "PRO155_CORSRV208";
 
     try {
       const url =
         session.user?.type === "undef"
           ? `/api/store/baja?id=54${session.user?.sub}&type=MOVIL`
           : session.user?.type === "OPEN"
-          ? `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}`
-          : `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}`;
+          ? `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${productPid}`
+          : `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${productPid}`;
 
       const res = await fetch(url);
       const data = await res.json();

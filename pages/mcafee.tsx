@@ -2,13 +2,12 @@ import { useSession, signIn } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
-
 import useStore from "../hooks/useStore";
 
 const MiCuenta = () => {
+  const { altaProducto, bajaProducto, result, error, fetching } = useStore();
   const { data: session, status } = useSession();
   const loading = status === "loading";
-  const { altaProducto, bajaProducto, result, error, fetching } = useStore();
 
   return (
     <>
@@ -28,9 +27,7 @@ const MiCuenta = () => {
           </>
         ) : (
           <>
-            <p className="font-bold text-xl my-4">
-              Landing McAfee
-            </p>
+            <p className="font-bold text-xl my-4">Landing McAfee</p>
 
             <Link href="/">
               <a>
@@ -38,10 +35,18 @@ const MiCuenta = () => {
               </a>
             </Link>
 
-            <button className="btn-blue mb-8" onClick={() => altaProducto("test", "test")}>
+            <button
+              className="btn-blue mb-8"
+              onClick={() =>
+                altaProducto("PRO155_CORSRV208", "dquipan@teco.com.ar")
+              }
+            >
               Dar alta
             </button>
-            <button className="btn-blue mb-8" onClick={() => bajaProducto("test")}>
+            <button
+              className="btn-blue mb-8"
+              onClick={() => bajaProducto("PRO155_CORSRV208")}
+            >
               Dar baja
             </button>
             {fetching ? <p>Procesando...</p> : null}

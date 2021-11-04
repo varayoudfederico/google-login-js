@@ -8,14 +8,14 @@ export default async function handler(req, res) {
     const id = req.query.id;
     const productPid = req.query.productPid;
     const mail = req.query.mail;
-    const subscriptionId = req.query.subscriptionId;
+    let subscriptionId = null;
     const addressId = req.query.addressId;
 
     console.log("type: ", type);
     console.log("id: ", id);
     console.log("productPid: ", productPid);
     console.log("mail: ", mail);
-    console.log("subscriptionId: ", subscriptionId);
+
     console.log("addressId: ", addressId);
 
     let token =
@@ -50,14 +50,39 @@ export default async function handler(req, res) {
       return res.status(401).json(resp);
     }
 
-    if (!subscriptionId && type == TYPE_OPEN) {
-      const resp = {
-        status: "error",
-        message: "Falta subscriptionId",
-        result: null,
-      };
-      return res.status(401).json(resp);
+    if (type === TYPE_OPEN) {
+      const BIUrl = new URL("http://localhost:3000/api/store/baseInstalada");
+      BIUrl.searchParams.append("subscriberId", id);
+      console.log("BI URL: ", BIUrl.href);
+      const BIresponse = await fetch(BIUrl.href);
+      const BIdata = await BIresponse.json();
+      console.log("BI DATA:", BIdata);
+      if (BIdata.status !== "success") {
+        const resp = {
+          status: "error",
+          message: "No se pudieron obtener susbcriberId y addressId",
+          result: null,
+          raw: BIdata,
+        };
+        res.status(500).json(resp);
+      } else {
+        subscriptionId = BIdata.result.subscriptionId;
+
+        console.log("subscriptionId: ", subscriptionId);
+        console.log("addressId: ", addressId);
+      }
+
+      if (!subscriptionId) {
+        const resp = {
+          status: "error",
+          message: "Falta subscriptionId",
+          result: null,
+        };
+        return res.status(401).json(resp);
+      }
     }
+
+    console.log("subscriptionId: ", subscriptionId);
 
     if (type === TYPE_MOVIL) {
       externalId = id;

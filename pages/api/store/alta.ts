@@ -1,6 +1,6 @@
 import { TYPE_OPEN, TYPE_MOVIL } from "../../../utils/constants";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   try {
     const baseURL = "https://backoffice-staging.personal-svcs.com";
     let externalId = null;
@@ -8,15 +8,13 @@ export default function handler(req, res) {
     const id = req.query.id;
     const productPid = req.query.productPid;
     const mail = req.query.mail;
-    const subscriptionId = req.query.subscriptionId;
-    const addressId = req.query.addressId;
+    let subscriptionId = null;
+    let addressId = null;
 
     console.log("type: ", type);
     console.log("id: ", id);
     console.log("productPid: ", productPid);
     console.log("mail: ", mail);
-    console.log("subscriptionId: ", subscriptionId);
-    console.log("addressId: ", addressId);
 
     let token =
       type === TYPE_MOVIL
@@ -59,22 +57,45 @@ export default function handler(req, res) {
       return res.status(401).json(resp);
     }
 
-    if (!subscriptionId && type == TYPE_OPEN) {
-      const resp = {
-        status: "error",
-        message: "Falta subscriptionId",
-        result: null,
-      };
-      return res.status(401).json(resp);
-    }
+    if (type === TYPE_OPEN) {
+      const BIUrl = new URL("http://localhost:3000/api/store/baseInstalada");
+      BIUrl.searchParams.append("subscriberId", id);
+      console.log("BI URL: ", BIUrl.href);
+      const BIresponse = await fetch(BIUrl.href);
+      const BIdata = await BIresponse.json();
+      console.log("BI DATA:", BIdata);
+      if (BIdata.status !== "success") {
+        const resp = {
+          status: "error",
+          message: "No se pudieron obtener susbcriberId y addressId",
+          result: null,
+          raw: BIdata,
+        };
+        res.status(500).json(resp);
+      } else {
+        subscriptionId = BIdata.result.subscriptionId;
+        addressId = BIdata.result.addressId;
+        console.log("subscriptionId: ", subscriptionId);
+        console.log("addressId: ", addressId);
+      }
 
-    if (!addressId && type == TYPE_OPEN) {
-      const resp = {
-        status: "error",
-        message: "Falta addressId",
-        result: null,
-      };
-      return res.status(401).json(resp);
+      if (!subscriptionId) {
+        const resp = {
+          status: "error",
+          message: "Falta subscriptionId",
+          result: null,
+        };
+        return res.status(401).json(resp);
+      }
+
+      if (!addressId) {
+        const resp = {
+          status: "error",
+          message: "Falta addressId",
+          result: null,
+        };
+        return res.status(401).json(resp);
+      }
     }
 
     if (type === TYPE_MOVIL) {
@@ -108,56 +129,57 @@ export default function handler(req, res) {
     }
 
     if (externalId) {
-      fetch(`${baseURL}/v1/customers/${externalId}/products`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          productPid,
-          mail,
-          addressId,
-          promoId: null,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          //   return res.status(200).json(data);
-          if (data.result?.serviceUrl) {
-            const resp = {
-              status: "success",
-              message: "Se dio de alta correctamente",
-              result: data.result.serviceUrl,
-              raw: data,
-            };
-            res.status(200).json(resp);
-          } else if (data.errorCode === "CONTENT_PID_ALREADY_EXISTS") {
-            const resp = {
-              status: "error",
-              message: "El usuario ya cuenta con el producto activado",
-              result: null,
-              raw: data,
-            };
-            res.status(401).json(resp);
-          } else if (data.errorCode === "CONTENT_NOT_FOUND") {
-            const resp = {
-              status: "error",
-              message: "El producto que se quiere activar no existe",
-              result: null,
-              raw: data,
-            };
-            res.status(401).json(resp);
-          } else {
-            const resp = {
-              status: "error",
-              message: `Error no identificado (${data.errorCode})`,
-              result: null,
-              raw: data,
-            };
-            res.status(500).json(resp);
-          }
-        });
+      const altaResponse = await fetch(
+        `${baseURL}/v1/customers/${externalId}/products`,
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            productPid,
+            mail,
+            addressId,
+            promoId: null,
+          }),
+        }
+      );
+      const altaData = await altaResponse.json();
+      //   return res.status(200).json(data);
+      if (altaData.result?.serviceUrl) {
+        const resp = {
+          status: "success",
+          message: "Se dio de alta correctamente",
+          result: altaData.result.serviceUrl,
+          raw: altaData,
+        };
+        return res.status(200).json(resp);
+      } else if (altaData.errorCode === "CONTENT_PID_ALREADY_EXISTS") {
+        const resp = {
+          status: "error",
+          message: "El usuario ya cuenta con el producto activado",
+          result: null,
+          raw: altaData,
+        };
+        return res.status(401).json(resp);
+      } else if (altaData.errorCode === "CONTENT_NOT_FOUND") {
+        const resp = {
+          status: "error",
+          message: "El producto que se quiere activar no existe",
+          result: null,
+          raw: altaData,
+        };
+        return res.status(401).json(resp);
+      } else {
+        const resp = {
+          status: "error",
+          message: `Error no identificado (${altaData.errorCode})`,
+          result: null,
+          raw: altaData,
+        };
+        return res.status(500).json(resp);
+      }
     }
   } catch (error) {
     console.log(error);

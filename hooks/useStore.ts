@@ -49,8 +49,6 @@ const useStore = () => {
     setError(null);
     setFetching(true);
     const demoSubscriberID = "25693";
-    const demoSubscriptionID = "10007043";
-    const demoAddressID = "30013095";
     const demoMail = "dquipan@teco.com.ar";
     const demoProductPID = "PRO155_CORSRV208";
 
@@ -59,8 +57,8 @@ const useStore = () => {
         session.user?.type === "undef"
           ? `/api/store/alta?id=54${session.user?.sub}&type=MOVIL`
           : session.user?.type === "OPEN"
-          ? `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&mail=${demoMail}&subscriptionId=${demoSubscriptionID}&addressId=${demoAddressID}`
-          : `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&mail=${demoMail}&subscriptionId=${demoSubscriptionID}&addressId=${demoAddressID}`;
+          ? `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&mail=${demoMail}`
+          : `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&mail=${demoMail}`;
 
       const res = await fetch(url);
       const data = await res.json();
@@ -79,7 +77,6 @@ const useStore = () => {
     setError(null);
     setFetching(true);
     const demoSubscriberID = "25693";
-    const demoSubscriptionID = "10007043";
     const demoProductPID = "PRO155_CORSRV208";
 
     try {
@@ -87,8 +84,8 @@ const useStore = () => {
         session.user?.type === "undef"
           ? `/api/store/baja?id=54${session.user?.sub}&type=MOVIL`
           : session.user?.type === "OPEN"
-          ? `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&subscriptionId=${demoSubscriptionID}`
-          : `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}&subscriptionId=${demoSubscriptionID}`;
+          ? `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}`
+          : `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${demoProductPID}`;
 
       const res = await fetch(url);
       const data = await res.json();

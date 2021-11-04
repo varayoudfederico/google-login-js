@@ -51,7 +51,9 @@ export default async function handler(req, res) {
     }
 
     if (type === TYPE_OPEN) {
-      const BIUrl = new URL("http://localhost:3000/api/store/baseInstalada");
+      const BIUrl = new URL(
+        `${process.env.NEXTAUTH_URL}/api/store/baseInstalada`
+      );
       BIUrl.searchParams.append("subscriberId", id);
       console.log("BI URL: ", BIUrl.href);
       const BIresponse = await fetch(BIUrl.href);

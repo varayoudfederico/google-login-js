@@ -12,8 +12,8 @@ const Home = () => {
   }, [session]);
 
   const logout = async () => {
-    const token = session.user?.id_token;
-    if (token) await fetch(`api/logout?token=${token}`);
+    // const token = session.user?.id_token;
+    await fetch(`api/logout`);
     signOut();
   };
 

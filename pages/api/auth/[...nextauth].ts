@@ -45,9 +45,9 @@ export default NextAuth({
       if (token.subscriberId) {
         session.user.subscriberId = token.subscriberId;
       }
-      if (token.id_token) {
-        session.user.id_token = token.id_token;
-      }
+      // if (token.id_token) {
+      //   session.user.id_token = token.id_token;
+      // }
       return session;
     },
   },

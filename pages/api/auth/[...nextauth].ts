@@ -52,7 +52,7 @@ export default NextAuth({
     },
   },
   jwt: {
-    secret: "Fede"
+    secret: process.env.NEXTAUTH_JWT_SECRET,
   },
   providers: [
     GoogleProvider({
@@ -69,7 +69,7 @@ export default NextAuth({
       idToken: true,
       clientId: process.env.NEXT_PUBLIC_IDP_CLIENT_ID,
       clientSecret: process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET,
-      
+
       profile(profile, tokens) {
         console.log("profile: ", profile);
         console.log("tokens: ", tokens);

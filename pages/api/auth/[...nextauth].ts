@@ -51,9 +51,7 @@ export default NextAuth({
       return session;
     },
   },
-  jwt: {
-    secret: process.env.NEXTAUTH_JWT_SECRET,
-  },
+  secret: process.env.NEXTAUTH_JWT_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,

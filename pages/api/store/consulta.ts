@@ -1,13 +1,19 @@
 import { TYPE_OPEN, TYPE_MOVIL } from "../../../utils/constants";
+import { getSession } from "next-auth/react";
 
 export default async function handler(req, res) {
   try {
     const baseURL = "https://backoffice-staging.personal-svcs.com";
+    const session = await getSession({ req });
     let externalId = null;
-    let type = req.query.type;
-    let id = req.query.id;
+    let type = "OPEN";
+    let realType = session.user.type;
+    const id = "25693";
+    let realId = session.user.sub;
     console.log("type: ", type);
-    console.log("id: ", id);
+    console.log("real type: ", realType);
+    console.log("realId: ", realId);
+    console.log("demo id: ", id);
     let token =
       type === TYPE_MOVIL
         ? process.env.NEXT_PUBLIC_TOKEN_CONSULTA_MOVIL
@@ -32,12 +38,12 @@ export default async function handler(req, res) {
       const crm = "OPEN";
       const subscriptionId = "";
       const provider = "TELECOM_AR";
-      const subscriberId = req.query.id;
+      const subscriberId = id;
 
       const json = `{"app":"${app}", "crm":"${crm}", "subscriberId":"${subscriberId}", "subscriptionId":"${subscriptionId}", "provider":"${provider}"}`;
       const encoded = Buffer.from(json, "binary").toString("base64");
 
-      // console.log("pre encode: ", json);
+      console.log("pre encode: ", json);
       // console.log("encode: ", encoded);
       // console.log("Subscriber ID: ", subscriberId);
       externalId = encoded;
@@ -61,7 +67,7 @@ export default async function handler(req, res) {
           },
         }
       );
-      console.log("Status: ", response.status)
+      console.log("Status: ", response.status);
       const data = await response.json();
       if (data.result?.length > 0) {
         const resp = {

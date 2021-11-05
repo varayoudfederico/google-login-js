@@ -14,7 +14,6 @@ import { useSession } from "next-auth/react";
 // };
 
 const useStore = () => {
-  const { data: session } = useSession();
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [fetching, setFetching] = useState(false);
@@ -23,15 +22,9 @@ const useStore = () => {
     setResult(null);
     setError(null);
     setFetching(true);
-    const demoSubscriberID = "25693";
-    try {
-      const url =
-        session.user?.type === "Movil"
-          ? `/api/store/consulta?id=54${session.user?.sub}&type=MOVIL`
-          : session.user?.type === "OPEN"
-          ? `/api/store/consulta?id=${demoSubscriberID}&type=OPEN`
-          : `/api/store/consulta`;
 
+    try {
+      const url = "/api/store/consulta";
       const res = await fetch(url);
       const data = await res.json();
       console.log(data);
@@ -48,18 +41,12 @@ const useStore = () => {
     setResult(null);
     setError(null);
     setFetching(true);
-    const demoSubscriberID = "25693";
+
     // const demoMail = "dquipan@teco.com.ar";
     // const demoProductPID = "PRO155_CORSRV208";
 
     try {
-      const url =
-        session.user?.type === "undef"
-          ? `/api/store/alta?id=54${session.user?.sub}&type=MOVIL`
-          : session.user?.type === "OPEN"
-          ? `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${productPid}&mail=${mail}`
-          : `/api/store/alta?id=${demoSubscriberID}&type=OPEN&productPid=${productPid}&mail=${mail}`;
-
+      const url = `/api/store/alta?productPid=${productPid}&mail=${mail}`;
       const res = await fetch(url);
       const data = await res.json();
       console.log(data);
@@ -76,16 +63,9 @@ const useStore = () => {
     setResult(null);
     setError(null);
     setFetching(true);
-    const demoSubscriberID = "25693";
 
     try {
-      const url =
-        session.user?.type === "undef"
-          ? `/api/store/baja?id=54${session.user?.sub}&type=MOVIL`
-          : session.user?.type === "OPEN"
-          ? `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${productPid}`
-          : `/api/store/baja?id=${demoSubscriberID}&type=OPEN&productPid=${productPid}`;
-
+      const url = `/api/store/baja?productPid=${productPid}`;
       const res = await fetch(url);
       const data = await res.json();
       console.log(data);

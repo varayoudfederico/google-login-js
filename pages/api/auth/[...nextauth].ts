@@ -51,6 +51,9 @@ export default NextAuth({
       return session;
     },
   },
+  jwt: {
+    secret: "Fede"
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -66,6 +69,7 @@ export default NextAuth({
       idToken: true,
       clientId: process.env.NEXT_PUBLIC_IDP_CLIENT_ID,
       clientSecret: process.env.NEXT_PUBLIC_IDP_CLIENT_SECRET,
+      
       profile(profile, tokens) {
         console.log("profile: ", profile);
         console.log("tokens: ", tokens);

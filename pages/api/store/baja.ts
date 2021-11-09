@@ -9,9 +9,9 @@ export default async function handler(req, res) {
     let externalId = null;
 
     let type = "OPEN";
-    let realType = session.user.type;
+    let realType = session ? session.user?.type : null;
     const id = "25693";
-    let realId = session.user.sub;
+    let realId = session ? session.user?.sub : null;
     console.log("type: ", type);
     console.log("real type: ", realType);
     console.log("realId: ", realId);

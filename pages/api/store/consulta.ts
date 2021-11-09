@@ -7,9 +7,9 @@ export default async function handler(req, res) {
     const session = await getSession({ req });
     let externalId = null;
     let type = "OPEN";
-    let realType = session.user.type;
+    let realType = session ? session.user?.type : null;
     const id = "25693";
-    let realId = session.user.sub;
+    let realId = session ? session.user?.sub : null;
     console.log("type: ", type);
     console.log("real type: ", realType);
     console.log("realId: ", realId);
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
       const provider = "TELECOM_AR";
       const subscriberId = id;
 
-      const json = `{"app":"${app}", "crm":"${crm}", "subscriberId":"${subscriberId}", "subscriptionId":"${subscriptionId}", "provider":"${provider}"}`;
+      const json = `{"app":"${app}", "crm":"${crm}", "subscriberId":"${subscriberId}", "provider":"${provider}"}`;
       const encoded = Buffer.from(json, "binary").toString("base64");
 
       console.log("pre encode: ", json);

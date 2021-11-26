@@ -13,7 +13,7 @@ const Home = () => {
 
   const logout = async () => {
     // const token = session.user?.id_token;
-    await fetch(`api/logout`);
+    await fetch(`api/auth/logout`);
     signOut();
   };
 

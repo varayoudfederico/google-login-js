@@ -25,9 +25,7 @@ export default NextAuth({
       }
 
       if (profile?.sub) {
-        if (profile.sub.includes("@")) {
-          token.type = "OPEN";
-        } else token.type = "Movil";
+        token.type = profile.sub.includes("@") ? "OPEN" : "MOVIL";
       }
 
       return token;

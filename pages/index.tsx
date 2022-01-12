@@ -9,6 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     console.log("Session: ", session);
+    console.log("IDP Client ID: ", process.env.NEXT_PUBLIC_IDP_CLIENT_ID);
   }, [session]);
 
   const logout = async () => {
@@ -64,7 +65,7 @@ const Home = () => {
           <>
             <p>No hay usuario logueado</p>
             <button className="btn-blue" onClick={() => signIn("idp")}>
-              Ingresar
+              IDP
             </button>
             <button className="btn-blue" onClick={() => signIn("google")}>
               Google
@@ -72,7 +73,7 @@ const Home = () => {
           </>
         ) : (
           <>
-            <p className="font-bold text-xl my-4">Logueado!</p>
+            <p className="my-4 text-xl font-bold">Logueado!</p>
             <p>Name: {session.user?.name}</p>
             <p>SUB: {session.user?.sub}</p>
             <p>Type: {session.user?.type}</p>

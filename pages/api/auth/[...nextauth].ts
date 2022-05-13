@@ -30,6 +30,11 @@ export default NextAuth({
 
       return token;
     },
+    async redirect({ url, baseUrl }) {
+      console.log("redirect callback, url: ", url);
+      console.log("redirect callback, baseUrl: ", baseUrl);
+      return baseUrl;
+    },
     /*
     Este callback se llama despues de la ejecucion del anterior. Aca tengo que asignar todas las variables que
     guarde en el objeto token en el callback anterior a la sesion de usuario. Todos estos parametros podran ser accedidos
